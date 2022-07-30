@@ -28,8 +28,8 @@ let alphabetROT47 = ["!","\"",",","#","$","%","&","'","(",")","*","+",",","-",".
   "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
   "[","\\","]","^","_","`",
   "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","{","|","}","~"];
-let descriptionBWW = "Hilfe: A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte (a=1,b=2,...,ä=27,ö=28,ü=29,ß=30) übersetzt und der Wortwert (Summe) berechnet. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts. Die Zuordnung kann wahlweise umgekehrt werden (a=26,b=25,...,z=1). Umlaute haben bei dieser Wandlung keine Entsprechung. Wenn 'Summe pro Zeile' ausgewählt wird, wird je Zeile im Feld 'Text' die Summe der Buchstabenwerte berechnet."
-let descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation vorgeben. Dabei hat die Rotation um den Wert 0 eine Sonderstellung: Sie erzeugt alle möglichen Rotationen von 1 bis 25. Die Umwandlung funktioniert in beide Richtungen.";
+let descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen."
+let descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation über den Slider vorgeben. Die Umwandlung funktioniert in beide Richtungen.";
 let descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert."
 
 
@@ -77,7 +77,6 @@ function updateCipher() {
   while (additionalControls.firstChild) {
     additionalControls.removeChild(additionalControls.firstChild);
   }
-
   if (ciphertype == "ROT13") {
     alphabets = [alphabetUppercase, alphabetLowercase];
     n = 13;
@@ -184,8 +183,7 @@ function transformBWW(inputText, direction) {
 
 function updateRotNumber() {
   //Update the shift by change of the slider
-  n = document.querySelector("#rotNumberSlider").value;
-  //console.log("current slider position is: " + n);
+  n = Number(document.querySelector("#rotNumberSlider").value);
   setTitle();
   setMappingTable();
 }
@@ -194,6 +192,10 @@ function setMappingTable(){
   while (mappingTables.firstChild) {
     mappingTables.removeChild(mappingTables.firstChild);
   }
+  let headlineMapping = document.createElement("h3");
+  headlineMapping.appendChild(document.createTextNode("Mapping-Tables"));
+  mappingTables.appendChild(headlineMapping);
+
   for (let alphabet of alphabets) {
     const newMappingTable = document.createElement("div");
     newMappingTable.classList.add("mappingTable");
@@ -218,52 +220,12 @@ function setMappingTable(){
       }
       letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
       letterBoxCol.appendChild(letterBoxBottom);
-
       
       newMappingTable.appendChild(letterBoxCol);
     }
     mappingTables.appendChild(newMappingTable);
   }
 }
-/*function setMappingTable() {
-  while (mappingTable.firstChild) {
-    mappingTable.removeChild(mappingTable.firstChild);
-  }
-  for (let alphabet of alphabets) {
-    const newTable = document.createElement("table");
-    newTable.classList.add("mappingTable");
-    const firstRow = document.createElement("tr");
-    for (let element of alphabet) {
-      const cell = document.createElement("td");
-      cell.appendChild(document.createTextNode(element));
-      firstRow.appendChild(cell);
-    }
-    const secondRow = document.createElement("tr");
-    for (let element of alphabet) {
-      const cell = document.createElement("td");
-      if (ciphertype == "ROT13") {
-        transformedLetter = transformROT13(element, 1);
-      }
-      if (ciphertype == "ROT47") {
-        transformedLetter = transformROT13(element, 1);
-      }
-      if (ciphertype == "Buchstabenwortwert") {
-        transformedLetter = transformBWW(element, 1);
-      }
-      //console.log(element + "->" + transformedLetter)
-      cell.appendChild(document.createTextNode(transformedLetter));
-      secondRow.appendChild(cell);
-    }
-    /*secondRow.forEach(function(alphabet){
-      const cell = document.createElement("td");
-      cell.appendChild(document.createTextNode(transform(alphabets, element)));
-      secondRow.appendChild(cell);
-    });
-    newTable.appendChild(firstRow);
-    newTable.appendChild(secondRow);
-    mappingTable.appendChild(newTable);
-  }
-}*/
 
 function setTitle() {
   if (ciphertype == "ROT13") {

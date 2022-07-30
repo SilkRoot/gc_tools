@@ -2,34 +2,10 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-table {
-  font-family: monospace;
-  margin-top: 1rem;
+p{
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em;
 }
-
-table,
-th,
-td {
-  border: 1px solid #aaa;
-  border-collapse: collapse;
-  padding: 0.2em;
-  font-size: 1.2em;
-}
-
-/*#input{
-    height: 50px;
-    width: 200px;
-}
-#output{
-    height: 50px;
-    width: 200px;
-}*/
-
-/*#rotNumberSlider{
-    margin-top: 1rem;
-    min-width: 90%; 
-}*/
-
 section {
   display: flex;
   flex-flow: row wrap;
@@ -53,6 +29,7 @@ section {
 
 #mappingTables {
   flex-flow: column wrap;
+  align-items: center;
 }
 
 .mappingTable {
@@ -67,4 +44,11 @@ section {
   border-style: solid;
   border-color: #aaa;
   text-align: center;
+  font-family: monospace;
+  font-size: 1.4em;
+}
+
+#trackable{
+    margin-top: 2em;
+    justify-content: space-around;
 }
