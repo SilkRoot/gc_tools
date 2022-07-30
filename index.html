@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geocaching</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body> 
+    <h1 id="title"></h1>
+    <label for="cipher">Wähle eine Verschlüsselung:</label>
+
+    <select name="cipher" id="cipher" selected="rot13">
+      <option value="rot13">ROT13</option>
+      <option value="rot47">ROT47</option>
+      <option value="bww">Buchstabenwortwert</option>
+    </select>
+    <br>
+    <br>
+    <input id="input"></textbox>
+    <input id="output"></textbox>
+    <button id="decrypt" type="submit">decrypt</button>
+    <button id="encrypt" type="submit">encrypt</button>
+    
+    <div id="mappingTable"></div>
+    <div id="additionalControls"></div>
+    <div id="description"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
