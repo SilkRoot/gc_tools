@@ -28,9 +28,11 @@ let alphabetROT47 = ["!","\"",",","#","$","%","&","'","(",")","*","+",",","-",".
   "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
   "[","\\","]","^","_","`",
   "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","{","|","}","~"];
-let descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen."
+let alphabetNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+let descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen.";
+let descriptionROT5 = "Die Zahlen 0-9 werden um 5 Positionen zyklisch verschoben, d.h. aus '0' wird '5', aus '6' wird '1', usw. Alle anderen Zeichen bleiben unverändert. Die Umwandlung funktioniert in beide Richtungen.";
 let descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation über den Slider vorgeben. Die Umwandlung funktioniert in beide Richtungen.";
-let descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert."
+let descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert.";
 
 
 //Initially build-Up the Page
@@ -42,10 +44,7 @@ setMappingTable();
 function encryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();
-  if (ciphertype == "ROT13") {
-    output.value = transformROT13(input.value, 1).join("");
-  }
-  if (ciphertype == "ROT47") {
+  if (ciphertype == "ROT5" || ciphertype == "ROT13" || ciphertype == "ROT47") {
     output.value = transformROT13(input.value, 1).join("");
   }
   if (ciphertype == "Buchstabenwortwert") {
@@ -60,10 +59,7 @@ function encryptText(e) {
 function decryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();
-  if (ciphertype == "ROT13") {
-    input.value = transformROT13(output.value, -1).join("");
-  }
-  if (ciphertype == "ROT47") {
+  if (ciphertype == "ROT5" || ciphertype == "ROT13" || ciphertype == "ROT47") {
     input.value = transformROT13(output.value, -1).join("");
   }
   if (ciphertype == "Buchstabenwortwert") {
@@ -76,6 +72,13 @@ function updateCipher() {
   //remove additional controls
   while (additionalControls.firstChild) {
     additionalControls.removeChild(additionalControls.firstChild);
+  }
+  if (ciphertype == "ROT5") {
+    alphabets = [alphabetNumbers];
+    n = 5;
+    addAdditionalControls();
+    description.innerHTML = descriptionROT5;
+    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "ROT13") {
     alphabets = [alphabetUppercase, alphabetLowercase];
@@ -209,11 +212,8 @@ function setMappingTable(){
       //Bottom
       const letterBoxBottom = document.createElement("p");
       let transformedLetter = "";
-      if (ciphertype == "ROT13") {
+      if (ciphertype == "ROT5" ||  ciphertype == "ROT13" || ciphertype == "ROT47" ) {
         transformedLetter = transformROT13(element, 1);
-      }
-      if (ciphertype == "ROT47") {
-        transformedLetter = transformROT13(element, 1);;
       }
       if (ciphertype == "Buchstabenwortwert") {
         transformedLetter = transformBWW(element, 1);
@@ -228,7 +228,7 @@ function setMappingTable(){
 }
 
 function setTitle() {
-  if (ciphertype == "ROT13") {
+  if (ciphertype == "ROT5" || ciphertype == "ROT13") {
     title.innerHTML = "ROT" + n;
   } else if (ciphertype == "ROT47"){
     title.innerHTML = "ROT47";
@@ -242,10 +242,17 @@ function setTitle() {
 function addAdditionalControls() {
   //Update the shift by change of the slider
   const slider = document.createElement("input");
+  if (ciphertype == "ROT5") {
+    slider.min = "0";
+    slider.max = "9";
+    slider.value = "5";
+  }
+  if (ciphertype == "ROT13") {
+    slider.min = "1";
+    slider.max = "26";
+    slider.value = "13";
+  }
   slider.type = "range";
-  slider.min = "1";
-  slider.max = "26";
-  slider.value = "13";
   slider.setAttribute("id", "rotNumberSlider");
   slider.addEventListener("input", updateRotNumber);
   additionalControls.appendChild(slider);
