@@ -9,7 +9,7 @@
   <body>
     <section>
       <h1 id="title"></h1>
-      <label for="cipher">Wähle eine Verschlüsselung:</label>
+      
     </section>
     <section>
       <div id="col1">
@@ -21,12 +21,14 @@
         <button id="encrypt" type="submit">◂ encrypt</button>
       </div>
       <div id="col3">
+        Verschlüsselungsmethode
         <select name="cipher" id="cipher" selected="ROT13">
-          <option value="rot5">ROT5</option>
+          <option value="bww">Buchstabenwortwert</option>
+          <option value="morse">Morse-Code</option>
           <option value="rot13">ROT13</option>
           <option value="rot47">ROT47</option>
-          <option value="bww">Buchstabenwortwert</option>
-          <option value="morse">Morsen</option>
+          <option value="rot5">ROT5</option>
+          <option value="scrabble">Scrabble-Wert</option>
         </select>
         <div id="description"></div>
       </div>
