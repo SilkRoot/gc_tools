@@ -6,25 +6,35 @@
     <title>Geocaching</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
-  <body> 
-    <h1 id="title"></h1>
-    <label for="cipher">Wähle eine Verschlüsselung:</label>
-
-    <select name="cipher" id="cipher" selected="rot13">
-      <option value="rot13">ROT13</option>
-      <option value="rot47">ROT47</option>
-      <option value="bww">Buchstabenwortwert</option>
-    </select>
-    <br>
-    <br>
-    <input id="input"></textbox>
-    <input id="output"></textbox>
-    <button id="decrypt" type="submit">decrypt</button>
-    <button id="encrypt" type="submit">encrypt</button>
-    
-    <div id="mappingTable"></div>
-    <div id="additionalControls"></div>
-    <div id="description"></div>
+  <body>
+    <section>
+      <h1 id="title"></h1>
+      <label for="cipher">Wähle eine Verschlüsselung:</label>
+    </section>
+    <section>
+      <div id="col1">
+        <input id="input"></textbox>
+        <button id="decrypt" type="submit">decrypt ▸</button>
+      </div>
+      <div id="col2">
+        <input id="output"></textbox>
+        <button id="encrypt" type="submit">◂ encrypt</button>
+      </div>
+      <div id="col3">
+        <select name="cipher" id="cipher" selected="rot13">
+          <option value="rot13">ROT13</option>
+          <option value="rot47">ROT47</option>
+          <option value="bww">Buchstabenwortwert</option>
+        </select>
+        <div id="description"></div>
+      </div>
+    </section>
+    <section>
+      <div id="additionalControls"></div>
+    </section>
+    <h3>Mapping-Tables</h3>
+    <section id="mappingTables">
+    </section>
     <script src="./app.js"></script>
   </body>
 </html>

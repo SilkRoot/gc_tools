@@ -1,29 +1,70 @@
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-table{
-    font-family: monospace;
-    margin-top: 1rem;
+table {
+  font-family: monospace;
+  margin-top: 1rem;
 }
 
-table, th, td {
-    border: 1px solid #aaa;
-    border-collapse: collapse;
-    padding: 0.2em;
-    font-size: 1.2em;
-  }
+table,
+th,
+td {
+  border: 1px solid #aaa;
+  border-collapse: collapse;
+  padding: 0.2em;
+  font-size: 1.2em;
+}
 
-#input{
+/*#input{
     height: 50px;
     width: 200px;
 }
 #output{
     height: 50px;
     width: 200px;
-}
+}*/
 
-#rotNumberSlider{
+/*#rotNumberSlider{
     margin-top: 1rem;
     min-width: 90%; 
+}*/
+
+section {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#col1,
+#col2,
+#col3 {
+  flex: 1 300px;
+}
+
+#input,
+#output {
+  width: 90%;
+  height: 30%;
+}
+
+#decrypt {
+  float: right;
+}
+
+#mappingTables {
+  flex-flow: column wrap;
+}
+
+.mappingTable {
+  display: flex ;
+  flex-flow: row wrap;
+  margin-top: 10px;
+}
+
+.letterBoxCol {
+  min-width: 1.5em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #aaa;
+  text-align: center;
 }

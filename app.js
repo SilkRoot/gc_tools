@@ -3,7 +3,7 @@ const decrypt = document.querySelector("#decrypt");
 const encrypt = document.querySelector("#encrypt");
 const input = document.querySelector("#input");
 const output = document.querySelector("#output");
-const mappingTable = document.querySelector("#mappingTable");
+const mappingTables = document.querySelector("#mappingTables");
 const additionalControls = document.querySelector("#additionalControls");
 const title = document.querySelector("#title");
 const cipher = document.querySelector("#cipher");
@@ -190,7 +190,42 @@ function updateRotNumber() {
   setMappingTable();
 }
 
-function setMappingTable() {
+function setMappingTable(){
+  while (mappingTables.firstChild) {
+    mappingTables.removeChild(mappingTables.firstChild);
+  }
+  for (let alphabet of alphabets) {
+    const newMappingTable = document.createElement("div");
+    newMappingTable.classList.add("mappingTable");
+    for (let element of alphabet){
+      const letterBoxCol = document.createElement("div");
+      letterBoxCol.classList.add("letterBoxCol");
+      //Top
+      const letterBoxTop = document.createElement("p");
+      letterBoxTop.appendChild(document.createTextNode(element));
+      letterBoxCol.appendChild(letterBoxTop);
+      //Bottom
+      const letterBoxBottom = document.createElement("p");
+      let transformedLetter = "";
+      if (ciphertype == "ROT13") {
+        transformedLetter = transformROT13(element, 1);
+      }
+      if (ciphertype == "ROT47") {
+        transformedLetter = transformROT13(element, 1);;
+      }
+      if (ciphertype == "Buchstabenwortwert") {
+        transformedLetter = transformBWW(element, 1);
+      }
+      letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
+      letterBoxCol.appendChild(letterBoxBottom);
+
+      
+      newMappingTable.appendChild(letterBoxCol);
+    }
+    mappingTables.appendChild(newMappingTable);
+  }
+}
+/*function setMappingTable() {
   while (mappingTable.firstChild) {
     mappingTable.removeChild(mappingTable.firstChild);
   }
@@ -223,12 +258,12 @@ function setMappingTable() {
       const cell = document.createElement("td");
       cell.appendChild(document.createTextNode(transform(alphabets, element)));
       secondRow.appendChild(cell);
-    });*/
+    });
     newTable.appendChild(firstRow);
     newTable.appendChild(secondRow);
     mappingTable.appendChild(newTable);
   }
-}
+}*/
 
 function setTitle() {
   if (ciphertype == "ROT13") {
