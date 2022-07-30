@@ -78,24 +78,20 @@ function updateCipher() {
     n = 5;
     addAdditionalControls();
     description.innerHTML = descriptionROT5;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "ROT13") {
     alphabets = [alphabetUppercase, alphabetLowercase];
     n = 13;
     addAdditionalControls();
     description.innerHTML = descriptionROT13;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "ROT47") {
     alphabets = [alphabetROT47];
     description.innerHTML = descriptionROT47;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "Buchstabenwortwert") {
     alphabets = [alphabetBWW];
     description.innerHTML = descriptionBWW;
-    //encrypt.style.visibility = "hidden";
   }
   setTitle();
   setMappingTable();
@@ -121,7 +117,6 @@ function computeSum(base) {
 
 function transformROT13(inputText, direction) {
   //Decrypts or encrypts inputText based on the alphabets in the given direction
-  //console.log("current n " + n);
   outputText = [];
   for (let alphabet of alphabets) {
     for (let element of inputText) {
@@ -130,27 +125,16 @@ function transformROT13(inputText, direction) {
       if (index != -1) {
         alphaLen = alphabet.length;
         if (index + n >= alphaLen && direction === 1) {
-          //console.log("index + n >= alphabet.length && direction === 1");
-          //console.log("index: " + index + " n: " + n + " alpha.len: " + alphaLen)
           targetLetterIndex = index + n - alphaLen;
-          //console.log("targetLetterIndex: " + targetLetterIndex)
         } else if (index - n < 0 && direction === -1) {
-          //console.log("index - n < 0 && direction === -1")
           targetLetterIndex = alphaLen - index - n;
         } else {
-          //console.log("else")
           targetLetterIndex = index + n * direction;
         }
-        //console.log("letter " + element + " with index " + index + " -> "
-        //  + alphabet[targetLetterIndex] + " with index " + targetLetterIndex
-        //  + " by n=" + n + " and alphabeth length of " + alphaLen);
         outputText.push(alphabet[targetLetterIndex]);
-      } else {
-        //console.log("index is -1")
       }
     }
   }
-  //console.log("result: " + outputText);
   return outputText;
 }
 
