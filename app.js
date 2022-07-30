@@ -20,20 +20,21 @@ let n = -1;
 let alphabets = [];
 
 //Cipher Alphabets
-let alphabetBWW = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "Ä", "Ö", "Ü", "ß", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-let alphabetUppercase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-let alphabetLowercase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-let alphabetROT47 = ["!","\"",",","#","$","%","&","'","(",")","*","+",",","-",".","/",
+const alphabetBWW = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "Ä", "Ö", "Ü", "ß", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+const alphabetUppercase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+const alphabetLowercase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+const alphabetROT47 = ["!","\"",",","#","$","%","&","'","(",")","*","+",",","-",".","/",
   "0","1","2","3","4","5","6","7","8","9",":",";","<","=",">","?","@",
   "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
   "[","\\","]","^","_","`",
   "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","{","|","}","~"];
-let alphabetNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-let descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen.";
-let descriptionROT5 = "Die Zahlen 0-9 werden um 5 Positionen zyklisch verschoben, d.h. aus '0' wird '5', aus '6' wird '1', usw. Alle anderen Zeichen bleiben unverändert. Die Umwandlung funktioniert in beide Richtungen.";
-let descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation über den Slider vorgeben. Die Umwandlung funktioniert in beide Richtungen.";
-let descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert.";
-
+const alphabetNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+const alphabetMorse = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".-.-", "---.", "..--", "...--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"];
+const descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen.";
+const descriptionROT5 = "Die Zahlen 0-9 werden um 5 Positionen zyklisch verschoben, d.h. aus '0' wird '5', aus '6' wird '1', usw. Alle anderen Zeichen bleiben unverändert. Die Umwandlung funktioniert in beide Richtungen.";
+const descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation über den Slider vorgeben. Die Umwandlung funktioniert in beide Richtungen.";
+const descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert.";
+const descriptionMorse = "Der Morsecode (auch Morsealphabet oder Morsezeichen genannt) ist ein gebräuchlicher Code zur telegrafischen Übermittlung von Buchstaben, Ziffern und weiterer Zeichen. Die Angabe ist mit \".\" für \"kurz\" bzw. \"-\" für \"lang\" zu machen. Die einzelnen Zeichen sind mit einem \ oder Leerzeichen zu trennen";
 
 //Initially build-Up the Page
 updateCipher();
@@ -45,14 +46,13 @@ function encryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();
   if (ciphertype == "ROT5" || ciphertype == "ROT13" || ciphertype == "ROT47") {
-    output.value = transformROT13(input.value, 1).join("");
+    input.value = transformROT13(output.value, -1).join("");
   }
   if (ciphertype == "Buchstabenwortwert") {
-    outputText = transformBWW(input.value, 1);
-    sumBWW = computeSum(outputText);
-    outputText =
-      outputText.join(" ") + " Σ " + sumBWW + " QS: " + computeQS(sumBWW);
-    output.value = outputText;
+    input.value = transformBWW(output.value, -1).join("");
+  }
+  if (ciphertype == "Morsen") {
+    input.value = transformMorse(output.value, -1).join(" ");
   }
 }
 
@@ -60,10 +60,15 @@ function decryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();
   if (ciphertype == "ROT5" || ciphertype == "ROT13" || ciphertype == "ROT47") {
-    input.value = transformROT13(output.value, -1).join("");
+    output.value = transformROT13(input.value, 1).join("");
   }
   if (ciphertype == "Buchstabenwortwert") {
-    input.value = transformBWW(output.value, -1).join(" ");
+    outputText = transformBWW(input.value, 1);
+    sumBWW = computeSum(outputText)
+    output.value = outputText.join(" ") + " Σ " + sumBWW + " QS: " + computeQS(sumBWW);
+  }
+  if (ciphertype == "Morsen") {
+    output.value = transformMorse(input.value, 1).join(" ");
   }
 }
 
@@ -92,6 +97,10 @@ function updateCipher() {
   if (ciphertype == "Buchstabenwortwert") {
     alphabets = [alphabetBWW];
     description.innerHTML = descriptionBWW;
+  }
+  if (ciphertype == "Morsen") {
+    alphabets = [alphabetMorse];
+    description.innerHTML = descriptionMorse;
   }
   setTitle();
   setMappingTable();
@@ -133,6 +142,34 @@ function transformROT13(inputText, direction) {
         }
         outputText.push(alphabet[targetLetterIndex]);
       }
+    }
+  }
+  return outputText;
+}
+
+function transformMorse(inputText, direction) {
+  outputText = [];
+  if (direction == 1){
+    inputTextSplitted = inputText.split(/[\s/]/);
+    for (let element of inputTextSplitted) {
+      if (alphabets[0].includes(element)){
+        index = alphabetMorse.indexOf(element);
+        outputText.push(alphabetBWW[index]);
+      } else {
+        outputText.push("_");
+      }
+    }
+  }
+  if (direction == -1){
+    inputTextSplitted = inputText.split("");
+    for (let element of inputTextSplitted) {
+      if (alphabetBWW.includes(String(element).toUpperCase())){
+        index = alphabetBWW.indexOf(String(element).toUpperCase());
+        outputText.push(alphabetMorse[index]);
+      } else {
+        outputText.push("_");
+      }
+      outputText.push(" ");
     }
   }
   return outputText;
@@ -202,6 +239,9 @@ function setMappingTable(){
       if (ciphertype == "Buchstabenwortwert") {
         transformedLetter = transformBWW(element, 1);
       }
+      if (ciphertype == "Morsen") {
+        transformedLetter = transformMorse(element, 1);
+      }
       letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
       letterBoxCol.appendChild(letterBoxBottom);
       
@@ -218,6 +258,8 @@ function setTitle() {
     title.innerHTML = "ROT47";
   } else if (ciphertype == "Buchstabenwortwert") {
     title.innerHTML = "Buchstabenwortwert";
+  } else if (ciphertype == "Morsen") {
+    title.innerHTML = "Morse-Code";
   } else {
     title.innerHTML = "unknown";
   }

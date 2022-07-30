@@ -17,6 +17,7 @@ section {
 #output {
   width: 90%;
   height: 30%;
+  font-size: 1.2em;
 }
 
 #decrypt {
