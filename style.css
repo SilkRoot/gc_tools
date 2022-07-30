@@ -2,10 +2,6 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-p{
-    margin-block-start: 0.1em;
-    margin-block-end: 0.1em;
-}
 section {
   display: flex;
   flex-flow: row wrap;
@@ -33,7 +29,7 @@ section {
 }
 
 .mappingTable {
-  display: flex ;
+  display: flex;
   flex-flow: row wrap;
   margin-top: 10px;
 }
@@ -48,7 +44,12 @@ section {
   font-size: 1.4em;
 }
 
-#trackable{
-    margin-top: 2em;
-    justify-content: space-around;
+.letterBoxCol > p {
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
+}
+
+.centered {
+  margin-top: 2em;
+  justify-content: space-around;
 }
