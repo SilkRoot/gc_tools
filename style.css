@@ -54,3 +54,11 @@ section {
   margin-top: 2em;
   justify-content: space-around;
 }
+
+.trackableImage {
+    padding-right: 0.5em;
+}
+
+.trackableText {
+    padding-top: 0.3em;
+}
