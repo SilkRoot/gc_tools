@@ -8,6 +8,8 @@ const additionalControls = document.querySelector("#additionalControls");
 const title = document.querySelector("#title");
 const cipher = document.querySelector("#cipher");
 const description = document.querySelector("#description");
+const descriptionInput = document.querySelector("#descriptionInput");
+const descriptionOutput = document.querySelector("#descriptionOutput");
 
 //Event Listeners
 decrypt.addEventListener("click", decryptText);
@@ -31,12 +33,15 @@ const alphabetROT47 = ["!","\"",",","#","$","%","&","'","(",")","*","+",",","-",
 const alphabetNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 const alphabetScrabble = ["1", "3", "4", "1", "1", "4", "2", "2", "1", "6", "4", "2", "3", "1", "2", "4", "10", "1", "1", "1", "1", "6", "3", "8", "10", "3", "6", "8", "6"];
 const alphabetMorse = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..", ".-.-", "---.", "..--", "...--..", ".----", "..---", "...--", "....-", ".....", "-....", "--...", "---..", "----.", "-----"];
+const alphabetRome = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "L", "C", "D", "M"];
+const alphabetRomeClear = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "50", "100", "500", "1000"];
 const descriptionBWW = "A-Z,ÄÖÜ,a-z,äöüß werden in die entsprechenden Buchstabenwerte übersetzt. Zahlen behalten ihren Wert. Das genaue Mapping für alle Buchstaben ist unten in der Mappingtabelle zu finden. Zusätzlich wird die Summe und die Quersumme der Summe berechnet und angezeigt. Alle anderen Zeichen werden als '_' dargestellt und in der Gesamtsumme nicht berücksichtigt. Das ganze geht natürlich auch rückwärts außer für die Zahlen.";
 const descriptionROT5 = "Die Zahlen 0-9 werden um 5 Positionen zyklisch verschoben, d.h. aus '0' wird '5', aus '6' wird '1', usw. Alle anderen Zeichen bleiben unverändert. Die Umwandlung funktioniert in beide Richtungen.";
 const descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verschoben, d.h. aus 'a' wird 'n', aus 'b' wird 'o', usw. Alle anderen Zeichen bleiben unverändert. Als Erweiterung kann man die Verschiebung/Rotation über den Slider vorgeben. Die Umwandlung funktioniert in beide Richtungen.";
 const descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert.";
 const descriptionMorse = "Der Morsecode (auch Morsealphabet oder Morsezeichen genannt) ist ein gebräuchlicher Code zur telegrafischen Übermittlung von Buchstaben, Ziffern und weiterer Zeichen. Die Angabe ist mit \".\" für \"kurz\" bzw. \"-\" für \"lang\" zu machen. Die einzelnen Zeichen sind mit einem \ oder Leerzeichen zu trennen";
 const descriptionScrabble = "A-Z,a-z und die Umlaute werden in die entsprechenden Scrabble-Buchstabenwerte (a=1,b=3,...) übersetzt und die Summe berechnet. Alle anderen Zeichen werden als '_' dargestellt. Da die Scrabble Werte nicht eindeutig sind, funktioniert die Umwandlung nur in eine Richtung.";
+const descriptionRome = "Römische Zahlen"
 
 //Initially build-Up the Page
 updateCipher();
@@ -55,6 +60,9 @@ function encryptText(e) {
   }
   if (ciphertype == "morse") {
     input.value = transformMorse(output.value, -1).join(" ");
+  }
+  if (ciphertype == "rome") {
+    input.value = transformRome(output.value, -1);
   }
 }
 
@@ -77,6 +85,9 @@ function decryptText(e) {
     sumBWW = computeSum(outputText)
     output.value = outputText.join(" ") + " Σ " + sumBWW + " QS: " + computeQS(sumBWW);
   }
+  if (ciphertype == "rome") {
+    output.value = transformRome(input.value, 1);
+  }
 }
 
 function updateCipher() {
@@ -88,14 +99,13 @@ function updateCipher() {
   if (ciphertype == "rot5") {
     alphabets = [alphabetNumbers];
     n = 5;
-    addAdditionalControls();
     description.innerHTML = descriptionROT5;
     //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "rot13") {
     alphabets = [alphabetUppercase, alphabetLowercase];
     n = 13;
-    addAdditionalControls();
+    
     description.innerHTML = descriptionROT13;
     //encrypt.style.visibility = "visible";
   }
@@ -112,15 +122,21 @@ function updateCipher() {
   if (ciphertype == "morse") {
     alphabets = [alphabetMorse];
     description.innerHTML = descriptionMorse;
-    encrypt.style.visibility = "visible";
+    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "scrabble") {
     alphabets = [alphabetScrabble];
     description.innerHTML = descriptionScrabble;
     //encrypt.style.visibility = "none";
   }
+  if (ciphertype == "rome") {
+    alphabets = [alphabetRome];
+    description.innerHTML = descriptionRome;
+    //encrypt.style.visibility = "none";
+  }
   setTitle();
   setMappingTable();
+  addAdditionalControls();
 }
 
 function computeQS(input) {
@@ -153,6 +169,66 @@ function transformScrabble(inputText){
   }
   return outputText;
 }
+
+function transformRome(inputText, direction){
+  outputText = [];
+  transformedList = [];
+  toSumUp = [];
+  let i = 0;
+  inputLength = inputText.length;
+  while (i < inputLength){
+    if (alphabetRome.includes(inputText[i])){
+      let checkFurther;
+      if (inputLength-i-1 > 3){
+        checkFurther = 3;
+      } else {
+        checkFurther = inputLength-i-1;
+      }
+      checkFurtherLoop:
+      for (let j = checkFurther; j >= 0; j--){
+        let checkIt = [];
+        for(let k = 0; k <= j; k++){
+          checkIt.push(inputText[i + k]);
+        }
+        if (alphabetRome.includes(checkIt.join(""))){
+          transformedList.push(Number(alphabetRomeClear[alphabetRome.indexOf(checkIt.join(""))]));
+          i = i + j;
+          break checkFurtherLoop;
+        } 
+      }
+    } else {
+      outputText = "Keine valide römische Zahl";
+      return outputText;
+    }
+    i++;
+  }
+  i = 1;
+  while (i <= transformedList.length){
+    if (i != transformedList.length){
+      if (transformedList[i-1] < transformedList[i]){
+        subtracted = transformedList[i] - transformedList[i-1];
+        toSumUp.push(subtracted);
+        i++;
+      } else {
+        toSumUp.push(transformedList[i-1]);
+      }
+    } else if (i === transformedList.length){
+      if (i === 1){
+        toSumUp.push(transformedList[i-1]);
+      } else {
+          if (transformedList[i-2] >= transformedList[i-1]){
+            toSumUp.push(transformedList[i-1]);
+          } else {
+            toSumUp.push(transformedList[i-1] - transformedList[i-2]);
+          }
+      }
+    }
+    i++;
+  }
+  outputText = computeSum(toSumUp);
+  return outputText;
+}
+
 function transformROT(inputText, direction) {
   //Decrypts or encrypts inputText based on the alphabets in the given direction
   outputText = [];
@@ -283,6 +359,9 @@ function setMappingTable(){
       if (ciphertype == "scrabble") {
         transformedLetter = element;
       }
+      if (ciphertype == "rome") {
+        transformedLetter = alphabetRomeClear[i];
+      }
       letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
       letterBoxCol.appendChild(letterBoxBottom);
       
@@ -297,13 +376,15 @@ function setTitle() {
   if (ciphertype == "rot5" || ciphertype == "rot13") {
     title.innerHTML = "ROT" + n;
   } else if (ciphertype == "rot47"){
-    title.innerHTML = "rot47";
+    title.innerHTML = "ROT47";
   } else if (ciphertype == "bww") {
     title.innerHTML = "Buchstabenwortwert";
   } else if (ciphertype == "morse") {
     title.innerHTML = "Morse-Code";
   } else if (ciphertype == "scrabble") {
     title.innerHTML = "Scrabble-Code";
+  } else if (ciphertype == "rome") {
+    title.innerHTML = "Römische Zahl -";
   } else {
     title.innerHTML = "unknown";
   }
@@ -311,19 +392,31 @@ function setTitle() {
 
 function addAdditionalControls() {
   //Update the shift by change of the slider
-  const slider = document.createElement("input");
-  if (ciphertype == "rot5") {
-    slider.min = "0";
-    slider.max = "9";
-    slider.value = "5";
+  if (ciphertype == "rot5" || ciphertype == "rot13"){
+    const slider = document.createElement("input");
+    if (ciphertype == "rot5") {
+      slider.min = "0";
+      slider.max = "9";
+      slider.value = "5";
+    }
+    if (ciphertype == "rot13") {
+      slider.min = "1";
+      slider.max = "26";
+      slider.value = "13";
+    }
+
+    slider.type = "range";
+    slider.setAttribute("id", "rotNumberSlider");
+    slider.addEventListener("input", updateRotNumber);
+    additionalControls.appendChild(slider);
   }
-  if (ciphertype == "rot13") {
-    slider.min = "1";
-    slider.max = "26";
-    slider.value = "13";
+
+  //add input and output description
+  if (ciphertype == "rome"){
+    descriptionInput.textContent  = "Römische Zahl";
+    descriptionOutput.textContent  = "Arabische Zahl";
+  } else {
+    descriptionInput.textContent  = "";
+    descriptionOutput.textContent  = "";
   }
-  slider.type = "range";
-  slider.setAttribute("id", "rotNumberSlider");
-  slider.addEventListener("input", updateRotNumber);
-  additionalControls.appendChild(slider);
 }
