@@ -246,7 +246,11 @@ function setMappingTable(){
     mappingTables.removeChild(mappingTables.firstChild);
   }
   let headlineMapping = document.createElement("h3");
-  headlineMapping.appendChild(document.createTextNode("Mapping-Tables"));
+  if (alphabets.length > 1){
+    headlineMapping.appendChild(document.createTextNode("Mapping-Tables"));
+  } else {
+    headlineMapping.appendChild(document.createTextNode("Mapping-Table"));
+  }
   mappingTables.appendChild(headlineMapping);
 
   for (let alphabet of alphabets) {
