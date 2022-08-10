@@ -41,7 +41,8 @@ const descriptionROT13 = "Die Buchstaben A-Z,a-z werden um 13 Positionen verscho
 const descriptionROT47 = "Alle ASCII Zeichen mit dem Wert 33 bis 126 werden um 47 Positionen verschoben, alle anderen Zeichen bleiben unverändert.";
 const descriptionMorse = "Der Morsecode (auch Morsealphabet oder Morsezeichen genannt) ist ein gebräuchlicher Code zur telegrafischen Übermittlung von Buchstaben, Ziffern und weiterer Zeichen. Die Angabe ist mit \".\" für \"kurz\" bzw. \"-\" für \"lang\" zu machen. Die einzelnen Zeichen sind mit einem \ oder Leerzeichen zu trennen";
 const descriptionScrabble = "A-Z,a-z und die Umlaute werden in die entsprechenden Scrabble-Buchstabenwerte (a=1,b=3,...) übersetzt und die Summe berechnet. Alle anderen Zeichen werden als '_' dargestellt. Da die Scrabble Werte nicht eindeutig sind, funktioniert die Umwandlung nur in eine Richtung.";
-const descriptionRome = "Römische Zahlen"
+const descriptionRome = "Römische Zahlen können in die Arabischen Zahlen konvertiert werden. Das geht in beide Richtungen. Links stehen die römischen Ziffern, rechts die arabischen";
+const descriptionSkytale = "Die Skytale (altgriechisch σκυτάλη skytálē, „Stock“, „Stab“) ist das älteste bekannte militärische Verschlüsselungsverfahren. Von den Spartanern wurden bereits vor mehr als 2500 Jahren geheime Botschaften nicht im Klartext übermittelt. Zur Verschlüsselung diente ein (Holz-)Stab mit einem bestimmten Durchmesser (Skytale). Die Skytale gehört zu den kryptographischen Transpositionsverfahren."
 
 //Initially build-Up the Page
 updateCipher();
@@ -53,7 +54,7 @@ function encryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();
   if (ciphertype == "rot5" || ciphertype == "rot13" || ciphertype == "rot47") {
-    input.value = transformROT(output.value, -1).join("");
+    input.value = transform(output.value, -1).join("");
   }
   if (ciphertype == "bww") {
     input.value = transformBWW(output.value, -1).join("");
@@ -63,6 +64,9 @@ function encryptText(e) {
   }
   if (ciphertype == "rome") {
     input.value = transformRome(output.value, -1);
+  }
+  if (ciphertype == "skytale") {
+    input.value = transformSkytale(output.value, -1);
   }
 }
 
@@ -88,51 +92,54 @@ function decryptText(e) {
   if (ciphertype == "rome") {
     output.value = transformRome(input.value, 1);
   }
+  if (ciphertype == "skytale") {
+    output.value = transformSkytale(input.value, 1);
+  }
 }
-
+ 
 function updateCipher() {
   ciphertype = cipher.options[cipher.selectedIndex].value;
   //remove additional controls
   while (additionalControls.firstChild) {
     additionalControls.removeChild(additionalControls.firstChild);
   }
+
   if (ciphertype == "rot5") {
     alphabets = [alphabetNumbers];
     n = 5;
     description.innerHTML = descriptionROT5;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "rot13") {
     alphabets = [alphabetUppercase, alphabetLowercase];
     n = 13;
-    
     description.innerHTML = descriptionROT13;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "rot47") {
     alphabets = [alphabetROT47];
     description.innerHTML = descriptionROT47;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "bww") {
     alphabets = [alphabetBWW];
     description.innerHTML = descriptionBWW;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "morse") {
     alphabets = [alphabetMorse];
     description.innerHTML = descriptionMorse;
-    //encrypt.style.visibility = "visible";
   }
   if (ciphertype == "scrabble") {
     alphabets = [alphabetScrabble];
     description.innerHTML = descriptionScrabble;
-    //encrypt.style.visibility = "none";
   }
   if (ciphertype == "rome") {
     alphabets = [alphabetRome];
     description.innerHTML = descriptionRome;
-    //encrypt.style.visibility = "none";
+  }
+  if (ciphertype == "rome") {
+    alphabets = [alphabetRome];
+    description.innerHTML = descriptionRome;
+  }
+  if (ciphertype == "skytale") {
+    description.innerHTML = descriptionSkytale;
   }
   setTitle();
   setMappingTable();
@@ -176,56 +183,61 @@ function transformRome(inputText, direction){
   toSumUp = [];
   let i = 0;
   inputLength = inputText.length;
-  while (i < inputLength){
-    if (alphabetRome.includes(inputText[i])){
-      let checkFurther;
-      if (inputLength-i-1 > 3){
-        checkFurther = 3;
-      } else {
-        checkFurther = inputLength-i-1;
-      }
-      checkFurtherLoop:
-      for (let j = checkFurther; j >= 0; j--){
-        let checkIt = [];
-        for(let k = 0; k <= j; k++){
-          checkIt.push(inputText[i + k]);
+  if (direction == 1){
+    while (i < inputLength){
+      if (alphabetRome.includes(inputText[i])){
+        let checkFurther;
+        if (inputLength-i-1 > 3){
+          checkFurther = 3;
+        } else {
+          checkFurther = inputLength-i-1;
         }
-        if (alphabetRome.includes(checkIt.join(""))){
-          transformedList.push(Number(alphabetRomeClear[alphabetRome.indexOf(checkIt.join(""))]));
-          i = i + j;
-          break checkFurtherLoop;
-        } 
-      }
-    } else {
-      outputText = "Keine valide römische Zahl";
-      return outputText;
-    }
-    i++;
-  }
-  i = 1;
-  while (i <= transformedList.length){
-    if (i != transformedList.length){
-      if (transformedList[i-1] < transformedList[i]){
-        subtracted = transformedList[i] - transformedList[i-1];
-        toSumUp.push(subtracted);
-        i++;
-      } else {
-        toSumUp.push(transformedList[i-1]);
-      }
-    } else if (i === transformedList.length){
-      if (i === 1){
-        toSumUp.push(transformedList[i-1]);
-      } else {
-          if (transformedList[i-2] >= transformedList[i-1]){
-            toSumUp.push(transformedList[i-1]);
-          } else {
-            toSumUp.push(transformedList[i-1] - transformedList[i-2]);
+        checkFurtherLoop:
+        for (let j = checkFurther; j >= 0; j--){
+          let checkIt = [];
+          for(let k = 0; k <= j; k++){
+            checkIt.push(inputText[i + k]);
           }
+          if (alphabetRome.includes(checkIt.join(""))){
+            transformedList.push(Number(alphabetRomeClear[alphabetRome.indexOf(checkIt.join(""))]));
+            i = i + j;
+            break checkFurtherLoop;
+          } 
+        }
+      } else {
+        outputText = "Keine valide römische Zahl";
+        return outputText;
       }
+      i++;
     }
-    i++;
+    i = 1;
+    while (i <= transformedList.length){
+      if (i != transformedList.length){
+        if (transformedList[i-1] < transformedList[i]){
+          subtracted = transformedList[i] - transformedList[i-1];
+          toSumUp.push(subtracted);
+          i++;
+        } else {
+          toSumUp.push(transformedList[i-1]);
+        }
+      } else if (i === transformedList.length){
+        if (i === 1){
+          toSumUp.push(transformedList[i-1]);
+        } else {
+            if (transformedList[i-2] >= transformedList[i-1]){
+              toSumUp.push(transformedList[i-1]);
+            } else {
+              toSumUp.push(transformedList[i-1] - transformedList[i-2]);
+            }
+        }
+      }
+      i++;
+    }
+    outputText = computeSum(toSumUp);
   }
-  outputText = computeSum(toSumUp);
+  if (direction == -1){
+    outputText = "not implemented yet";
+  }
   return outputText;
 }
 
@@ -310,6 +322,72 @@ function transformBWW(inputText, direction) {
   return outputText;
 }
 
+function transformSkytale(inputText, direction) {
+  outputText = [];
+  let inputLength = inputText.length;
+  //console.log(Math.ceil(inputLength/n));
+  n = 3
+  //for (let i = 0; i < Math.ceil(inputLength/n); i++){
+  if (direction == -1){
+    for (let i = 0; i < n; i++){
+      let j = i;
+      //console.log("i: " + i)
+      //while (j < inputLength){
+      while (j < inputLength){
+        //console.log("j:" + j + " adding: " + inputText[j]);
+        outputText.push(inputText[j])
+        //console.log(outputText);
+        j = j+n;
+        //console.log("j is " + j)
+      }
+    }
+  }
+  /*if (direction = 1){
+    let extraRuns = inputLength%n;
+    let jumpWidth = Math.floor(inputLength/n);
+    outerLoop:
+    for (let i = 0; i <= jumpWidth; i++){
+      let j = i;
+      console.log("reset j")
+      while (j < inputLength){
+        outputText.push(inputText[j])
+        console.log("j is: " + j + " jumpWidth " + jumpWidth + " extraRuns " + extraRuns + " letter: " + inputText[j]);
+        if (i == jumpWidth && extraRuns > 0){
+          console.log("last run")
+          j = j + Number(jumpWidth) + 1;
+          extraRuns--;
+        } 
+        if (i < n){
+          console.log("normal run")
+          j = j + Number(jumpWidth) + 1 ;
+        }
+        if (extraRuns == 0) {
+          break outerLoop;
+        }
+        console.log("updated: j is: " + j + " jumpWidth " + jumpWidth + " extraRuns " + extraRuns);
+      }
+       
+    }
+  }*/
+  if (direction == 1){
+    let jumpWidth = Math.ceil(inputLength/n);
+    for (let i = 0; i < Math.ceil(inputLength/n); i++){
+      let j = 0;
+      let index = 0;
+      while (j < n){
+        index = i + j * jumpWidth;
+        console.log("inpLen:"  + inputLength + " i:" + i + " j:" + j + " jumpWi:" + jumpWidth + " index: " + index + " MaxOuterLoop: "  + Math.ceil(inputLength/n) );
+        if (index < inputLength){
+          outputText.push(inputText[index]);
+        }
+        j++; 
+      }
+      console.log(outputText);
+    }
+  }
+  return outputText;
+}
+
 function updateRotNumber() {
   //Update the shift by change of the slider
   n = Number(document.querySelector("#rotNumberSlider").value);
@@ -321,54 +399,56 @@ function setMappingTable(){
   while (mappingTables.firstChild) {
     mappingTables.removeChild(mappingTables.firstChild);
   }
-  let headlineMapping = document.createElement("h3");
-  if (alphabets.length > 1){
-    headlineMapping.appendChild(document.createTextNode("Mapping-Tables"));
-  } else {
-    headlineMapping.appendChild(document.createTextNode("Mapping-Table"));
-  }
-  mappingTables.appendChild(headlineMapping);
-
-  for (let alphabet of alphabets) {
-    const newMappingTable = document.createElement("div");
-    newMappingTable.classList.add("mappingTable");
-    i = 0;
-    for (let element of alphabet){
-      const letterBoxCol = document.createElement("div");
-      letterBoxCol.classList.add("letterBoxCol");
-      //Top
-      const letterBoxTop = document.createElement("p");
-      if (ciphertype == "scrabble"){
-        letterBoxTop.appendChild(document.createTextNode(alphabetBWW[i]));
-      } else {
-        letterBoxTop.appendChild(document.createTextNode(element));
-      }
-      letterBoxCol.appendChild(letterBoxTop);
-      //Bottom
-      const letterBoxBottom = document.createElement("p");
-      let transformedLetter = "";
-      if (ciphertype == "rot5" ||  ciphertype == "rot13" || ciphertype == "rot47" ) {
-        transformedLetter = transformROT(element, 1);
-      }
-      if (ciphertype == "bww") {
-        transformedLetter = transformBWW(element, 1);
-      }
-      if (ciphertype == "morse") {
-        transformedLetter = transformMorse(element, 1);
-      }
-      if (ciphertype == "scrabble") {
-        transformedLetter = element;
-      }
-      if (ciphertype == "rome") {
-        transformedLetter = alphabetRomeClear[i];
-      }
-      letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
-      letterBoxCol.appendChild(letterBoxBottom);
-      
-      newMappingTable.appendChild(letterBoxCol);
-      i++;
+  if (ciphertype == "rot5" || ciphertype == "rot13" || ciphertype == "rot47" || ciphertype == "bww" || ciphertype == "morse" || ciphertype == "rome" || ciphertype == "scrabble"){
+    let headlineMapping = document.createElement("h3");
+    if (alphabets.length > 1){
+      headlineMapping.appendChild(document.createTextNode("Mapping-Tables"));
+    } else {
+      headlineMapping.appendChild(document.createTextNode("Mapping-Table"));
     }
-    mappingTables.appendChild(newMappingTable);
+    mappingTables.appendChild(headlineMapping);
+
+    for (let alphabet of alphabets) {
+      const newMappingTable = document.createElement("div");
+      newMappingTable.classList.add("mappingTable");
+      i = 0;
+      for (let element of alphabet){
+        const letterBoxCol = document.createElement("div");
+        letterBoxCol.classList.add("letterBoxCol");
+        //Top
+        const letterBoxTop = document.createElement("p");
+        if (ciphertype == "scrabble"){
+          letterBoxTop.appendChild(document.createTextNode(alphabetBWW[i]));
+        } else {
+          letterBoxTop.appendChild(document.createTextNode(element));
+        }
+        letterBoxCol.appendChild(letterBoxTop);
+        //Bottom
+        const letterBoxBottom = document.createElement("p");
+        let transformedLetter = "";
+        if (ciphertype == "rot5" ||  ciphertype == "rot13" || ciphertype == "rot47" ) {
+          transformedLetter = transformROT(element, 1);
+        }
+        if (ciphertype == "bww") {
+          transformedLetter = transformBWW(element, 1);
+        }
+        if (ciphertype == "morse") {
+          transformedLetter = transformMorse(element, 1);
+        }
+        if (ciphertype == "scrabble") {
+          transformedLetter = element;
+        }
+        if (ciphertype == "rome") {
+          transformedLetter = alphabetRomeClear[i];
+        }
+        letterBoxBottom.appendChild(document.createTextNode(transformedLetter));
+        letterBoxCol.appendChild(letterBoxBottom);
+        
+        newMappingTable.appendChild(letterBoxCol);
+        i++;
+      }
+      mappingTables.appendChild(newMappingTable);
+    }
   }
 }
 
@@ -384,7 +464,9 @@ function setTitle() {
   } else if (ciphertype == "scrabble") {
     title.innerHTML = "Scrabble-Code";
   } else if (ciphertype == "rome") {
-    title.innerHTML = "Römische Zahl -";
+    title.innerHTML = "Römische Zahl";
+  } else if (ciphertype == "skytale") {
+      title.innerHTML = "Skytale Transposition: " + n;
   } else {
     title.innerHTML = "unknown";
   }
@@ -392,7 +474,7 @@ function setTitle() {
 
 function addAdditionalControls() {
   //Update the shift by change of the slider
-  if (ciphertype == "rot5" || ciphertype == "rot13"){
+  if (ciphertype == "rot5" || ciphertype == "rot13" || ciphertype == "skytale"){
     const slider = document.createElement("input");
     if (ciphertype == "rot5") {
       slider.min = "0";
@@ -403,6 +485,11 @@ function addAdditionalControls() {
       slider.min = "1";
       slider.max = "26";
       slider.value = "13";
+    }
+    if (ciphertype == "skytale") {
+      slider.min = "0";
+      slider.max = "25";
+      slider.value = "50";
     }
 
     slider.type = "range";
@@ -418,5 +505,12 @@ function addAdditionalControls() {
   } else {
     descriptionInput.textContent  = "";
     descriptionOutput.textContent  = "";
+  }
+
+  //
+  if (ciphertype == "scrabble" || ciphertype == "rome"){
+    encrypt.style.visibility='hidden'; 
+  } else {
+    encrypt.style.visibility='visible' 
   }
 }
