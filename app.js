@@ -10,6 +10,9 @@ const cipher = document.querySelector("#cipher");
 const description = document.querySelector("#description");
 const descriptionInput = document.querySelector("#descriptionInput");
 const descriptionOutput = document.querySelector("#descriptionOutput");
+const mySidenav = document.getElementById("mySidenav");
+const content = document.getElementById("content");
+
 
 //Event Listeners
 decrypt.addEventListener("click", decryptText);
@@ -48,8 +51,19 @@ const descriptionSkytale = "Die Skytale (altgriechisch σκυτάλη skytálē,
 updateCipher();
 setTitle();
 setMappingTable();
+openCloseNav();
 
 //Functions
+function openCloseNav(){
+  if (mySidenav.style.width == '3em') {
+    mySidenav.style.width = "15em";
+    content.style.marginLeft = "15em";
+  } else {
+    mySidenav.style.width = "3em";
+    content.style.marginLeft= "3em";
+  }
+}
+
 function encryptText(e) {
   //Prevent natural behaviour
   e.preventDefault();

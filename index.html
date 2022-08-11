@@ -1,15 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Geocaching</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebastian Lemstra</title>
+  <link rel="stylesheet" href="./style.css" />
+  <!--fontawesome free-->
+  <link href="/assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="/assets/fontawesome/css/brands.css" rel="stylesheet">
+  <link href="/assets/fontawesome/css/solid.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="mySidenav" class="sidenav">
+    <span style="font-size:30px;cursor:pointer" onclick="openCloseNav()">&#9776;</span>
+    <!--<button id="navigation"><i class="fa-solid fa-bars"></i></button>-->
+    <!-- <ul>
+    <li><a href="index.html">home</a></li>
+    <li><a href="index.html">geocaching</a></li>
+    <li><a href="imprint.html">Impressum</a></li>
+  </ul>-->
+  </div>
+  <div id="content">
     <section>
       <h1 id="title"></h1>
-      
+
     </section>
     <section>
       <div id="col1">
@@ -25,14 +41,14 @@
       <div id="col3">
         Verschlüsselungsmethode
         <select name="cipher" id="cipher">
-          <option value="bww">Buchstabenwortwert</option>
+          <option value="bww" selected>Buchstabenwortwert</option>
           <option value="morse">Morse-Code</option>
           <option value="rot13">ROT13</option>
           <option value="rot47">ROT47</option>
           <option value="rot5">ROT5</option>
           <option value="rome">Römische Zahl</option>
           <option value="scrabble">Scrabble-Wert</option>
-          <option value="skytale" selected>Skytale</option>
+          <option value="skytale">Skytale</option>
         </select>
         <div id="description"></div>
       </div>
@@ -45,12 +61,12 @@
     <section class="centered">
       <section>
         <img class="trackableImage" src="https://www.geocaching.com/images/WptTypes/23.gif">
-        <a class="trackableText" href="http://www.geocaching.com/track/details.aspx?tracker=PCDGY3" target="_blank">Trackable: Nennen wir es Hugo</a>
+        <a class="trackableText" href="http://www.geocaching.com/track/details.aspx?tracker=PCDGY3"
+          target="_blank">Trackable: Nennen wir es Hugo</a>
       </section>
     </section>
-    <section class="centered">
-      <a href="imprint.html">Impressum</a>
-    </section>
     <script src="./app.js"></script>
-  </body>
+  </div>
+</body>
+
 </html>
