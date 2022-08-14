@@ -12,12 +12,14 @@ const descriptionInput = document.querySelector("#descriptionInput");
 const descriptionOutput = document.querySelector("#descriptionOutput");
 const mySidenav = document.getElementById("mySidenav");
 const content = document.getElementById("content");
+const nav_icon = document.getElementById("nav-icon3");
 
 
 //Event Listeners
 decrypt.addEventListener("click", decryptText);
 encrypt.addEventListener("click", encryptText);
 cipher.addEventListener("change", updateCipher);
+nav_icon.addEventListener("click", openCloseNav);
 
 //Global Variables
 let ciphertype = "";
@@ -51,16 +53,28 @@ const descriptionSkytale = "Die Skytale (altgriechisch σκυτάλη skytálē,
 updateCipher();
 setTitle();
 setMappingTable();
-openCloseNav();
+//openCloseNav();
+
+
 
 //Functions
 function openCloseNav(){
-  if (mySidenav.style.width == '3em') {
+  nav_icon.classList.toggle('open');
+  if (nav_icon.classList.contains('open')) {
     mySidenav.style.width = "15em";
     content.style.marginLeft = "15em";
+    //add links
+    /*let linkOne = document.createElement("a");
+    linkOne.appendChild(document.createTextNode("Impressum"));
+    linkOne.href = "imprint.html";
+    linkOne.setAttribute("id", "imprintLink");
+    mySidenav.appendChild(linkOne);*/
+
   } else {
-    mySidenav.style.width = "3em";
-    content.style.marginLeft= "3em";
+    mySidenav.style.width = "5em";
+    content.style.marginLeft= "5em";
+    //remove links
+    //document.getElementById("imprintLink").remove();
   }
 }
 
