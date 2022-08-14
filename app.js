@@ -12,7 +12,7 @@ const descriptionInput = document.querySelector("#descriptionInput");
 const descriptionOutput = document.querySelector("#descriptionOutput");
 const mySidenav = document.getElementById("mySidenav");
 const content = document.getElementById("content");
-const nav_icon = document.getElementById("nav-icon3");
+const nav_icon = document.getElementById("nav-icon");
 
 
 //Event Listeners
@@ -61,8 +61,9 @@ setMappingTable();
 function openCloseNav(){
   nav_icon.classList.toggle('open');
   if (nav_icon.classList.contains('open')) {
-    mySidenav.style.width = "15em";
-    content.style.marginLeft = "15em";
+    mySidenav.style.width = "20em";
+    content.style.marginLeft = "20em";
+    document.getElementById("overlay").style.opacity = "0.4";
     //add links
     /*let linkOne = document.createElement("a");
     linkOne.appendChild(document.createTextNode("Impressum"));
@@ -71,8 +72,9 @@ function openCloseNav(){
     mySidenav.appendChild(linkOne);*/
 
   } else {
-    mySidenav.style.width = "5em";
-    content.style.marginLeft= "5em";
+    mySidenav.style.width = "7em";
+    content.style.marginLeft= "7em";
+    document.getElementById("overlay").style.opacity = "1";
     //remove links
     //document.getElementById("imprintLink").remove();
   }

@@ -14,60 +14,74 @@
 
 <body>
   <div id="mySidenav" class="sidenav">
-    <div id="nav-icon3">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+    <div id="SideNavOpenClose">
+      <div id="nav-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
-    <!--<span style="font-size:30px;cursor:pointer" onclick="openCloseNav()">&#9776;</span>-->
+    <div id="SideNavContent">
+      <ul>
+        <li><a href="keks">test1</a></li>
+        <li><a href="keks">test2</a></li>
+        <li><a href="keks">test3</a></li>
+      </ul>
+    </div>
   </div>
-  
-  <div id="content">
-    <section>
-      <h1 id="title"></h1>
 
-    </section>
-    <section>
-      <div id="col1">
-        <div id="descriptionInput"></div>
-        <input id="input" maxlength="1000"></textbox>
-        <button id="decrypt" type="submit">decrypt ▸</button>
-      </div>
-      <div id="col2">
-        <div id="descriptionOutput"></div>
-        <input id="output" maxlength="1000"></textbox>
-        <button id="encrypt" type="submit">◂ encrypt</button>
-      </div>
-      <div id="col3">
-        Verschlüsselungsmethode
-        <select name="cipher" id="cipher">
-          <option value="bww" selected>Buchstabenwortwert</option>
-          <option value="morse">Morse-Code</option>
-          <option value="rot13">ROT13</option>
-          <option value="rot47">ROT47</option>
-          <option value="rot5">ROT5</option>
-          <option value="rome">Römische Zahl</option>
-          <option value="scrabble">Scrabble-Wert</option>
-          <option value="skytale">Skytale</option>
-        </select>
-        <div id="description"></div>
-      </div>
-    </section>
-    <section>
-      <div id="additionalControls"></div>
-    </section>
-    <section id="mappingTables">
-    </section>
-    <section class="centered">
+  <div id="content">
+    <div id="overlay">
       <section>
-        <img class="trackableImage" src="https://www.geocaching.com/images/WptTypes/23.gif">
-        <a class="trackableText" href="http://www.geocaching.com/track/details.aspx?tracker=PCDGY3"
-          target="_blank">Trackable: Nennen wir es Hugo</a>
+        <h1 id="title"></h1>
       </section>
-    </section>
-    <script src="./app.js"></script>
+
+      <section>
+        <div id="col1">
+          <div id="descriptionInput"></div>
+          <input id="input" maxlength="1000"></textbox>
+          <button id="decrypt" type="submit">decrypt ▸</button>
+        </div>
+        <div id="col2">
+          <div id="descriptionOutput"></div>
+          <input id="output" maxlength="1000"></textbox>
+          <button id="encrypt" type="submit">◂ encrypt</button>
+        </div>
+        <div id="col3">
+          Verschlüsselungsmethode
+          <select name="cipher" id="cipher">
+            <option value="bww" selected>Buchstabenwortwert</option>
+            <option value="morse">Morse-Code</option>
+            <option value="rot13">ROT13</option>
+            <option value="rot47">ROT47</option>
+            <option value="rot5">ROT5</option>
+            <option value="rome">Römische Zahl</option>
+            <option value="scrabble">Scrabble-Wert</option>
+            <option value="skytale">Skytale</option>
+          </select>
+          <div id="description"></div>
+        </div>
+      </section>
+
+      <section>
+        <div id="additionalControls"></div>
+      </section>
+
+      <section id="mappingTables">
+      </section>
+
+      <section class="centered">
+        <section>
+          <img class="trackableImage" src="https://www.geocaching.com/images/WptTypes/23.gif">
+          <a class="trackableText" href="http://www.geocaching.com/track/details.aspx?tracker=PCDGY3"
+            target="_blank">Trackable: Nennen wir es Hugo</a>
+        </section>
+      </section>
+
+    </div>
   </div>
+  <script src="./app.js"></script>
 </body>
 
 </html>
