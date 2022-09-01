@@ -1,63 +1,7 @@
-body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin: 0;
-}
-
-.sidenav {
-  height: 100%;
-  width: 7em;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  border-right: 0.1em solid #aaa;
-  overflow-x: hidden;
-  transition: 0.5s;
-
-  display: flex;
-}
-
-#SideNavOpenClose {
-  height: 100%;
-  width: 7em;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#SideNavContent{
-  transition: 0.5s ease-in-out;
-  display: none;
-  margin-left: 7em;
-  display: flex;
-  align-items: center;
-}
-
-#content {
-  transition: 0.5s;
-  margin-left: 7em;
-  background-image: linear-gradient(45deg, #9dc66b 0%, #4fa49a 100%);
-}
-
-#overlay{
-  z-index: 10;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  /*background: rgba(0, 0, 0, 0.0);*/
-  padding: 16px;
-  opacity: 1;
-}
-
 section {
   display: flex;
   flex-flow: row wrap;
+  margin-bottom: 2em;
 }
 
 #col1,
@@ -66,17 +10,54 @@ section {
   flex: 1 300px;
 }
 
+.centered {
+  margin-top: 2em;
+  justify-content: space-around;
+}
+
+/*encryption area*/
 #input,
 #output {
   width: 90%;
-  height: 30%;
+  height: 10em;
+  border: 0.14em solid #4fa49a;
   font-size: 1.2em;
+}
+
+#decrypt, #encrypt, #cipher{
+  margin-top: 0.5em;
+  border: none;
+  background-color: #4fa49a;
+  color: white;
+  font-size: 1em;
+  padding: 0.3em;
+  width: 90%;
 }
 
 #decrypt {
   float: right;
+  margin-right: 10%;
 }
 
+#cipher{
+  margin-bottom: 1em;
+}
+
+option:focus,
+option:active,
+option:hover,
+option:focus-within,
+option:target,
+option:focus-visible{
+  color: #4fa49a;
+  background-color: white;
+}
+
+#description{
+  width: 90%;
+}
+
+/*mapping table*/
 #mappingTables {
   flex-flow: column wrap;
   align-items: center;
@@ -89,10 +70,10 @@ section {
 }
 
 .letterBoxCol {
-  min-width: 1.6em;
+  min-width: 1.8em;
   border-width: 0.07em;
   border-style: solid;
-  border-color: #aaa;
+  border-color: #4fa49a;
   text-align: center;
   font-family: monospace;
   font-size: 1.4em;
@@ -105,11 +86,10 @@ section {
   padding-right: 0.25em;
 }
 
-.centered {
-  margin-top: 2em;
-  justify-content: space-around;
-}
 
+
+
+/*trackable link at the end*/
 .trackableImage {
   padding-right: 0.5em;
 }
@@ -118,77 +98,32 @@ section {
   padding-top: 0.3em;
 }
 
-/* Menue Button Animation */
-#nav-icon {
-  width: 60px;
-  height: 45px;
-  position: relative;
-  margin: 50px auto;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-  cursor: pointer;
+a.trackableText:link,
+a.trackableText:visited,
+a.trackableText:hover,
+a.trackableText:active {
+  color: #4fa49a;
 }
 
-#nav-icon span {
-  display: block;
-  position: absolute;
-  height: 9px;
+/*slider*/
+#rotNumberSlider{
+  -webkit-appearance: none;
   width: 100%;
-  background: #4fa49a;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-#nav-icon span:nth-child(1) {
-  top: 0px;
-}
-
-#nav-icon span:nth-child(2),
-#nav-icon span:nth-child(3) {
-  top: 18px;
-}
-
-#nav-icon span:nth-child(4) {
-  top: 36px;
-}
-
-#nav-icon.open span:nth-child(1) {
-  top: 18px;
-  width: 0%;
-  left: 50%;
-}
-
-#nav-icon.open span:nth-child(2) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-#nav-icon.open span:nth-child(3) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-#nav-icon.open span:nth-child(4) {
-  top: 18px;
-  width: 0%;
-  left: 50%;
+#rotNumberSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background:  #4fa49a;
+  cursor: pointer;
 }
