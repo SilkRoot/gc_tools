@@ -89,12 +89,14 @@ function getIndexOfItem(item) {
     return (itemIndex);
 }
 
-function addToOpenItems(e) {
+function addNewItemFromInput(e) {
     //Prevent natural behaviour
     e.preventDefault();
     if (itemInput.value != "") {
-        addItemToDOM(itemIntput.value, openItems);
-        itemIntput.value = "";
+        const item = ["Eigene Items", itemIntput.value, "", "open", "", new Date()];
+        items.push(item);
+        localStorage.setItem("localItemStorage", JSON.stringify(items));
+        createListView();
     } else {
         console.log("tried to add empty item. Doing nothing");
     }
@@ -233,7 +235,6 @@ function onMouseUp(e) {
 function addDescription(e) {
     const clickedItem = e.target.firstChild.innerText;
     const clickedItemIndex = getIndexOfItem(clickedItem);
-    const clickedItemStatus = items[clickedItemIndex][3];
 
     while (overlay.firstChild) {
         overlay.removeChild(overlay.firstChild);
@@ -245,7 +246,7 @@ function addDescription(e) {
     buttonCloseAdditionalInfoInput.addEventListener("click", closeAdditionalInfo);
 
     const titleSection = document.createElement("section");
-    titleSection.classList.add("titleSection")
+    titleSection.setAttribute("id", "titleSection");
     const title = document.createElement("h1");
     title.setAttribute("id", "title");
     title.innerHTML = clickedItem;
@@ -285,10 +286,6 @@ function closeAdditionalInfo() {
     items[updatedItemIndex][2] = additionalInputText;
     //update local storage
     localStorage.setItem("localItemStorage", JSON.stringify(items));
-
-    /*document.getElementById("buttonCloseAdditionalInfoInput").remove();
-    document.getElementById("additionalInfoInput").remove();
-    document.getElementById("title").remove();*/
     createListView();
 }
 
@@ -297,6 +294,7 @@ function createListView() {
         overlay.removeChild(overlay.firstChild);
     }
     const titleSection = document.createElement("section");
+    titleSection.setAttribute("id", "titleSection");
     titleSection.innerHTML = "<h1 id='title'>Einkaufsliste</h1>";
     overlay.appendChild(titleSection);
 
@@ -335,7 +333,7 @@ function createListView() {
     addItemButton = document.querySelector("#addItemButton");
     itemIntput = document.querySelector("#itemInput");
 
-    addItemButton.addEventListener("click", addToOpenItems);
+    addItemButton.addEventListener("click", addNewItemFromInput);
 
     updateFromLocalStroage();
     addAllCategoriesToOther();

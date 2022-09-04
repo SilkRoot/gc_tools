@@ -164,12 +164,17 @@ h4 {
   color: #4fa49a;
 }
 
-#title{
+/*#title{
   margin-bottom: 1.5em;
-}
+}*/
 
 #imprintImage{
   margin: 3em;
   height: 8em;
   width: 14em;
+}
+
+#titleSection{
+  display: flex;
+  margin-bottom: 1.5em;
 }

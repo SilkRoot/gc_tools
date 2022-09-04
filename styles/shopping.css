@@ -1,18 +1,25 @@
-#openItems, #otherItems{
+#openItems,
+#otherItems {
     display: flex;
     flex-flow: column wrap;
 }
 
-.groupHeadline{
+#controls {
+    display: flex;
+    margin-bottom: 1.5em;
+}
+
+.groupHeadline {
     margin-top: 3em;
 }
 
-.itemBox, #recentItems{
+.itemBox,
+#recentItems {
     display: flex;
     flex-flow: row wrap;
 }
 
-.item{
+.item {
     height: 10em;
     width: 10em;
     background-color: lightgreen;
@@ -25,32 +32,40 @@
     border: none;
 }
 
-.openStatus{
+.openStatus {
     background-color: lightcoral;
 }
 
-.itemText{
+.itemText {
     pointer-events: none;
     font-size: 1.3em;
 }
 
-.additionalInfo{
+.additionalInfo {
     border: none;
     width: 8em;
-    background-color: lightgreen;
+    background-color: rgba(0, 0, 0, 0);
     text-align: center;
     margin-top: 1em;
     pointer-events: none;
     font-size: 1em;
 }
 
-#additionalInfoInput{
+#additionalInfoInput {
     width: 100%;
+    border: 0.14em solid #4fa49a;
+    font-size: 1em;
+    padding: 0.2em;
+}
+
+#itemInput {
+    width: 93%;
     border: 0.14em solid #4fa49a;
     font-size: 1.2em;
 }
 
-#buttonCloseAdditionalInfoInput{
+#buttonCloseAdditionalInfoInput,
+#addItemButton {
     background: none;
     border: none;
     font-size: 2em;
@@ -59,8 +74,37 @@
     order: 2;
 }
 
-.titleSection{
-    display: flex;
+#addItemButton {
+    font-size: 2em;
+}
+
+select {
+    margin-top: 1em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0.14em solid #4fa49a;
+    font-size: 1em;
+    outline: none;
+    cursor: pointer;
+    /*background-color: #4fa49a;*/
+    padding: 0.2em;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select option {
+    padding: 0.2em;
+}
+
+select:focus::-ms-value {
+    background-color: transparent;
+}
+
+.dropDown {
+    width: 100%;
 }
 
 /* drop down styling: https://www.clickstorm.de/blog/dropdown-css3/ */
