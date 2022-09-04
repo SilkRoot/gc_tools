@@ -30,3 +30,24 @@
     pointer-events: none;
     font-size: 1em;
 }
+
+#additionalInfoInput{
+    width: 100%;
+    border: 0.14em solid #4fa49a;
+    font-size: 1.2em;
+}
+
+#buttonCloseAdditionalInfoInput{
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #4fa49a;
+    margin-left: auto;
+    order: 2;
+}
+
+.titleSection{
+    display: flex;
+}
+
+/* drop down styling: https://www.clickstorm.de/blog/dropdown-css3/ */
