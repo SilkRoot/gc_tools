@@ -1,4 +1,4 @@
-#openItems, #recentItems, #otherItems{
+#openItems, #otherItems{
     display: flex;
     flex-flow: column wrap;
 }
@@ -7,7 +7,7 @@
     margin-top: 3em;
 }
 
-.itemBox{
+.itemBox, #recentItems{
     display: flex;
     flex-flow: row wrap;
 }

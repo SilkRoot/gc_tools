@@ -38,27 +38,18 @@ function moveItem(e) {
     const clickedItem = e.target.firstChild.innerText;
     const clickedItemIndex = getIndexOfItem(clickedItem);
     const clickedItemStatus = items[clickedItemIndex][3];
-    //getHtmlElement(clickedItem);
     items[clickedItemIndex][5] = new Date();
     if (clickedItemStatus === "open") {
         updateRecentItems();
         items[clickedItemIndex][3] = "recent";
         items[clickedItemIndex][4] = "0";
-        //e.target.remove();
-        //addItemToRecent(clickedItemIndex);
-        //checkEmptyCategories(openItems);
     } else if (clickedItemStatus === "recent") {
         rank = items[clickedItemIndex][4];
         items[clickedItemIndex][4] = "";
         items[clickedItemIndex][3] = "open";
         decreaseRecentRank(rank);
-        //e.target.remove();
-        //addItemToOpen(clickedItemIndex);
-        //checkEmptyCategories(recentItems);
     } else if (clickedItemStatus === "other") {
         items[clickedItemIndex][3] = "open";
-        //e.target.remove();
-        //addItemToOpen(clickedItemIndex);
     }
     //update local storage
     localStorage.setItem("localItemStorage", JSON.stringify(items));
@@ -81,22 +72,12 @@ function updateRecentItems() {
             if (parseInt(value[4]) > 4) {
                 items[index][4] = "";
                 items[index][3] = "other";
-                //getHtmlElement(value[1]).remove();
-                //addItemToDOM(value[1], otherItems);
             } else {
                 items[index][4] = parseInt(items[index][4]) + 1;
             }
         }
     })
 }
-
-/*function getHtmlElement(item) {
-    for (const element of document.querySelectorAll('.item')) {
-        if (element.innerText.includes(item)) {
-            return (element);
-        }
-    }
-}*/
 
 function getIndexOfItem(item) {
     let itemIndex = -1;
@@ -116,16 +97,6 @@ function addToOpenItems(e) {
         itemIntput.value = "";
     } else {
         console.log("tried to add empty item. Doing nothing");
-    }
-}
-
-function checkEmptyCategories(groupElement){
-    let allExistingCategories = groupElement.children;
-    for (let i = 0; i < allExistingCategories.length; i++){
-        //headline and itemBox in allExistingCategories[i] so the itemBox must be checked
-        if (allExistingCategories[i].children[1].children.length === 0){
-            allExistingCategories[i].remove();
-        }
     }
 }
 
