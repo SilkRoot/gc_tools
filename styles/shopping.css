@@ -1,0 +1,16 @@
+#openItems, #recentItems, #otherItems{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.item{
+    height: 10em;
+    width: 10em;
+    background-color: lightgreen;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
