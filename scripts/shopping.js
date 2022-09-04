@@ -38,28 +38,31 @@ function moveItem(e) {
     const clickedItem = e.target.firstChild.innerText;
     const clickedItemIndex = getIndexOfItem(clickedItem);
     const clickedItemStatus = items[clickedItemIndex][3];
-    getHtmlElement(clickedItem);
+    //getHtmlElement(clickedItem);
     items[clickedItemIndex][5] = new Date();
     if (clickedItemStatus === "open") {
         updateRecentItems();
         items[clickedItemIndex][3] = "recent";
         items[clickedItemIndex][4] = "0";
-        e.target.remove();
-        addItemToDOM(clickedItem, items[clickedItemIndex][2], recentItems);
+        //e.target.remove();
+        //addItemToRecent(clickedItemIndex);
+        //checkEmptyCategories(openItems);
     } else if (clickedItemStatus === "recent") {
         rank = items[clickedItemIndex][4];
         items[clickedItemIndex][4] = "";
         items[clickedItemIndex][3] = "open";
         decreaseRecentRank(rank);
-        e.target.remove();
-        addItemToDOM(clickedItem, items[clickedItemIndex][2], openItems);
+        //e.target.remove();
+        //addItemToOpen(clickedItemIndex);
+        //checkEmptyCategories(recentItems);
     } else if (clickedItemStatus === "other") {
         items[clickedItemIndex][3] = "open";
-        e.target.remove();
-        addItemToDOM(clickedItem, items[clickedItemIndex][2], openItems);
+        //e.target.remove();
+        //addItemToOpen(clickedItemIndex);
     }
     //update local storage
     localStorage.setItem("localItemStorage", JSON.stringify(items));
+    createListView();
 }
 
 function decreaseRecentRank(rank) {
@@ -78,8 +81,8 @@ function updateRecentItems() {
             if (parseInt(value[4]) > 4) {
                 items[index][4] = "";
                 items[index][3] = "other";
-                getHtmlElement(value[1]).remove();
-                addItemToDOM(value[1], otherItems);
+                //getHtmlElement(value[1]).remove();
+                //addItemToDOM(value[1], otherItems);
             } else {
                 items[index][4] = parseInt(items[index][4]) + 1;
             }
@@ -87,13 +90,13 @@ function updateRecentItems() {
     })
 }
 
-function getHtmlElement(item) {
+/*function getHtmlElement(item) {
     for (const element of document.querySelectorAll('.item')) {
         if (element.innerText.includes(item)) {
             return (element);
         }
     }
-}
+}*/
 
 function getIndexOfItem(item) {
     let itemIndex = -1;
@@ -116,24 +119,130 @@ function addToOpenItems(e) {
     }
 }
 
-function addItemToDOM(item, description, targetElement) {
+function checkEmptyCategories(groupElement){
+    let allExistingCategories = groupElement.children;
+    for (let i = 0; i < allExistingCategories.length; i++){
+        //headline and itemBox in allExistingCategories[i] so the itemBox must be checked
+        if (allExistingCategories[i].children[1].children.length === 0){
+            allExistingCategories[i].remove();
+        }
+    }
+}
+
+function addItemToOpen(itemID) {
+    //get all informations about item from items array
+    const itemCategory = items[itemID][0];
+
+    //check if category exists
+    let allExistingCategories = openItems.children;
+    let categoryElement;
+    let addCategory = true;
+    //check if category exists, if so put in categoryElement
+    if (allExistingCategories.length != 0){
+        for (let i = 0; i < allExistingCategories.length; i++){
+            if (allExistingCategories[i].classList.contains("Cat_" + categories.indexOf(itemCategory))){
+                categoryElement = allExistingCategories[i];
+                addCategory = false;
+            }
+        }
+    } 
+    //create category because it does not exist and add to openItems
+    if (addCategory === true){
+        categoryElement = document.createElement("div");
+        categoryElement.classList.add("Cat_" + categories.indexOf(itemCategory));
+        categoryElement.classList.add("itemCategory");
+        
+        const categoryHeadline = document.createElement("h4");
+        categoryHeadline.innerText = itemCategory;
+        categoryElement.appendChild(categoryHeadline);
+
+        const itemBox = document.createElement("div");
+        itemBox.classList.add("itemBox");
+        categoryElement.appendChild(itemBox);
+
+        openItems.appendChild(categoryElement);
+    }
+
+    const itemDiv = generateItemDiv(itemID);
+
+    //add item to itembox where all items are containted to separate from headline of category
+    itemBox = categoryElement.querySelector(".itemBox");
+    itemBox.appendChild(itemDiv);
+}
+
+function addItemToRecent(itemID){
+    const itemDiv = generateItemDiv(itemID);
+
+    //add itemDiv to group recent
+    recentItems.appendChild(itemDiv);
+}
+
+function addItemToOther(itemID){
+    //get all informations about item from items array
+    const itemCategory = items[itemID][0];
+
+    let categoryElement;
+
+    //get right category
+    let allExistingCategories = otherItems.children;
+    for (let i = 0; i < allExistingCategories.length; i++){
+        if (allExistingCategories[i].classList.contains("Cat_" + categories.indexOf(itemCategory))){
+            categoryElement = allExistingCategories[i];
+        }
+    }
+
+    const itemDiv = generateItemDiv(itemID);
+
+    //add item to itembox where all items are containted to separate from headline of category
+    itemBox = categoryElement.querySelector(".itemBox");
+    itemBox.appendChild(itemDiv);
+}
+
+function generateItemDiv(itemID){
+    //get all informations about item from items array
+    const itemName = items[itemID][1];
+    const itemAdditionalInfo = items[itemID][2];
+    const itemGroup = items[itemID][3];
+
+    //create button
     const itemDiv = document.createElement("button");
     itemDiv.classList.add("item");
-
+    if (itemGroup === "open"){
+        itemDiv.classList.add("openStatus");
+    }
+    //add name
     const itemText = document.createElement("div");
     itemText.classList.add("itemText");
-    itemText.innerText = item;
+    itemText.innerText = itemName;
     itemDiv.appendChild(itemText);
-
+    //add listeners
     itemDiv.addEventListener("mousedown", onMouseDown);
     itemDiv.addEventListener("mouseup", onMouseUp);
-
+    //add additional info
     const additionalInfo = document.createElement("div");
-    additionalInfo.innerText = description;
+    additionalInfo.innerText = itemAdditionalInfo;
     additionalInfo.classList.add("additionalInfo");
     itemDiv.appendChild(additionalInfo);
 
-    targetElement.appendChild(itemDiv);
+    return(itemDiv);
+}
+
+function addAllCategoriesToOther(){
+    categories.forEach(function (value, index) {
+        const categoryElement = document.createElement("div");
+        categoryElement.classList.add("itemCategory");
+        categoryElement.classList.add("Cat_" + index);
+        
+        const categoryHeadline = document.createElement("h4");
+        categoryHeadline.innerText = value;
+        categoryElement.appendChild(categoryHeadline);
+
+        const itemBox = document.createElement("div");
+        itemBox.classList.add("itemBox");
+        categoryElement.appendChild(itemBox);
+
+        otherItems.appendChild(categoryElement);
+    })
 }
 
 function onMouseDown() {
@@ -199,7 +308,6 @@ function addDescription(e) {
 function closeAdditionalInfo() {
     let updatedItemIndex = getIndexOfItem(document.getElementById("title").innerHTML);
     let additionalInputText = document.getElementById("additionalInfoInput").value;
-    console.log(additionalInputText);
     if (additionalInputText === "Menge, Beschreibung...") {
         additionalInputText = ""
     }
@@ -210,13 +318,13 @@ function closeAdditionalInfo() {
     /*document.getElementById("buttonCloseAdditionalInfoInput").remove();
     document.getElementById("additionalInfoInput").remove();
     document.getElementById("title").remove();*/
-    while (overlay.firstChild) {
-        overlay.removeChild(overlay.firstChild);
-    }
     createListView();
 }
 
 function createListView() {
+    while (overlay.firstChild) {
+        overlay.removeChild(overlay.firstChild);
+    }
     const titleSection = document.createElement("section");
     titleSection.innerHTML = "<h1 id='title'>Einkaufsliste</h1>";
     overlay.appendChild(titleSection);
@@ -226,16 +334,13 @@ function createListView() {
     controls.innerHTML = "<input type='text' id='itemInput'></input>    <button id='addItemButton' type='submit'>      <i class='fas fa-plus-square'></i>    </button>"
     overlay.appendChild(controls);
 
-    const aktuellHeadline = document.createElement("h3");
-    aktuellHeadline.innerHTML = "Aktuell";
-    overlay.appendChild(aktuellHeadline);
-
     const openItemsContainer = document.createElement("div");
     openItemsContainer.setAttribute("id", "openItems");
     overlay.appendChild(openItemsContainer);
 
     const zuletztHeadline = document.createElement("h3");
-    zuletztHeadline.innerHTML = "zuletzt Eingekaufte Items";
+    zuletztHeadline.classList.add("groupHeadline");
+    zuletztHeadline.innerHTML = "zuletzt eingekauft";
     overlay.appendChild(zuletztHeadline);
 
     const recentItemsContainer = document.createElement("div");
@@ -243,7 +348,8 @@ function createListView() {
     overlay.appendChild(recentItemsContainer);
 
     const weitereHeadline = document.createElement("h3");
-    weitereHeadline.innerHTML = "Weitere Items";
+    weitereHeadline.classList.add("groupHeadline");
+    weitereHeadline.innerHTML = "Alles";
     overlay.appendChild(weitereHeadline);
 
     const otherItemsContainer = document.createElement("div");
@@ -261,18 +367,19 @@ function createListView() {
     addItemButton.addEventListener("click", addToOpenItems);
 
     updateFromLocalStroage();
+    addAllCategoriesToOther();
 
     //add all Items to UI
-    items.forEach(element => {
-        if (element[3] === "open") {
-            addItemToDOM(element[1], element[2], openItems);
+    items.forEach(function (value, index) {
+        if (items[index][3] === "open"){
+            addItemToOpen(index);
         }
-        if (element[3] === "recent") {
-            addItemToDOM(element[1], element[2], recentItems);
+        if (items[index][3] === "recent"){
+            addItemToRecent(index);
         }
-        if (element[3] === "other") {
-            addItemToDOM(element[1], "", otherItems);
-        }
+    });
+    items.forEach(function (value, index) {
+        addItemToOther(index);
     });
 }
 
