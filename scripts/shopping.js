@@ -8,15 +8,17 @@ let itemIntput;
 let overlay = document.querySelector("#overlay");
 
 //events
-document.addEventListener("DOMContentLoaded", createListView);
+document.addEventListener("DOMContentLoaded", initialLoad());
 
 //global variables
 var holdStart = null;
 var holdStop = null;
 
+let items = [];
+
 //itemlist
 //Kategorie, Item, CustomText, Status, RankRecent, DatumUpdate
-var items = [
+/*var items = [
     ["Obst/Gemüse", "Banane", "1", "other", "", ""],
     ["Obst/Gemüse", "Kiwi", "", "other", "", ""],
     ["Obst/Gemüse", "Gurke", "", "open", "", ""],
@@ -29,11 +31,65 @@ var items = [
     ["Molkereiprodukte", "Frischkäse", "", "recent", "0", ""],
     ["Molkereiprodukte", "Frischmilch", "", "other", "", ""],
     ["Molkereiprodukte", "Butter", "11", "other", "", ""]
-];
+];*/
 
 const categories = ["Obst/Gemüse", "Backwaren", "Molkereiprodukte", "Fleisch/Fisch", "Zutaten/Gewürze", "Fertig-/Tiefkühlprodukte", "Süßwaren", "Haushalt", "Baumarkt/Garten", "Eigene Items"];
 
 //functions
+async function getNewItemList() {
+    let url = "/api/fresh_list"
+    try{
+        let response = await fetch(url)
+        console.log("got all the data from api")
+        return await response.json();
+    } catch (error){
+        console.log(error);
+    }
+}
+
+async function updateListFromServer(){
+    let serverItemList = await getNewItemList();
+    console.log("updating the items with the follwing list from the server: " + serverItemList);
+    serverItemList.forEach(serverItem => {
+        let newItem = [
+                serverItem.group,           //0
+                serverItem.type,            //1
+                serverItem.additionalInfo,  //2
+                serverItem.status,          //3
+                serverItem.recentIndex,     //4
+                serverItem.updatedDate      //5
+            ]
+        console.log("loading following item in global items" + newItem);
+        items.push(newItem);
+    });
+    console.log("finished loading items from server: ");
+    console.log(items);
+}
+
+async function updateFromLocalStroage() {
+    if (localStorage.getItem("localItemStorage") === null) {
+        let itemsServer = await updateListFromServer();
+        localStorage.setItem("localItemStorage", JSON.stringify(itemsServer));
+    } else {
+        items = JSON.parse(localStorage.getItem("localItemStorage"));
+    }
+}
+
+
+
+
+
+//updateList();
+async function initialLoad(){
+    await updateFromLocalStroage();
+    console.log("got async all")
+    console.log(items);
+    createListView();
+}
+
+
+
+
 function moveItem(e) {
     const clickedItem = e.target.firstChild.innerText;
     const clickedItemIndex = getIndexOfItem(clickedItem);
@@ -352,10 +408,3 @@ function createListView() {
     });
 }
 
-function updateFromLocalStroage() {
-    if (localStorage.getItem("localItemStorage") === null) {
-        localStorage.setItem("localItemStorage", JSON.stringify(items));
-    } else {
-        items = JSON.parse(localStorage.getItem("localItemStorage"));
-    }
-}
