@@ -7,14 +7,15 @@ let addItemButton;
 let itemIntput;
 let overlay = document.querySelector("#overlay");
 
+let items = [];
+
 //events
-document.addEventListener("DOMContentLoaded", initialLoad());
+document.addEventListener("DOMContentLoaded", getDataFromServer());
 
 //global variables
 var holdStart = null;
 var holdStop = null;
 
-let items = [];
 
 //itemlist
 //Kategorie, Item, CustomText, Status, RankRecent, DatumUpdate
@@ -36,59 +37,66 @@ let items = [];
 const categories = ["Obst/Gemüse", "Backwaren", "Molkereiprodukte", "Fleisch/Fisch", "Zutaten/Gewürze", "Fertig-/Tiefkühlprodukte", "Süßwaren", "Haushalt", "Baumarkt/Garten", "Eigene Items"];
 
 //functions
-async function getNewItemList() {
+function getDataFromServer(){
     let url = "/api/fresh_list"
-    try{
-        let response = await fetch(url)
-        console.log("got all the data from api")
-        return await response.json();
-    } catch (error){
-        console.log(error);
-    }
+    fetch(url)
+        .then((response) => response.json())
+            .then((data) => convertToItems(data))
+                .then(() => {
+                    console.log("all items converted. Calling now updateFromLocalStorage");
+                    updateFromLocalStroage()
+                    createListView()
+                })
+        .catch((error) => console.log(error));
 }
 
-async function updateListFromServer(){
-    let serverItemList = await getNewItemList();
-    console.log("updating the items with the follwing list from the server: " + serverItemList);
-    serverItemList.forEach(serverItem => {
-        let newItem = [
-                serverItem.group,           //0
-                serverItem.type,            //1
-                serverItem.additionalInfo,  //2
-                serverItem.status,          //3
-                serverItem.recentIndex,     //4
-                serverItem.updatedDate      //5
+async function sendDataToServer(){
+    let url = "/api/post_full_list";
+    fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(items)
+    })
+}
+
+
+function convertToItems(data){
+    return new Promise((resolve, reject) => {
+        console.log("creating new promise to convert data to items");
+        data.forEach(data => {
+            let newItem = [
+                data.group,           //0
+                data.type,            //1
+                data.customText,      //2
+                data.status,          //3
+                data.recentIndex,     //4
+                data.updatedDate      //5
             ]
-        console.log("loading following item in global items" + newItem);
-        items.push(newItem);
+            items.push(newItem);
+            console.log("iterating over all items to push to items");
+        })
+        console.log("finished to push to items");
+        resolve(
+            console.log("resolve pushing to items")
+        );
+        reject("something whent rwong");
     });
-    console.log("finished loading items from server: ");
-    console.log(items);
 }
 
-async function updateFromLocalStroage() {
+function updateFromLocalStroage() {
+    console.log("function updateFromLocalStroage was called");
     if (localStorage.getItem("localItemStorage") === null) {
-        let itemsServer = await updateListFromServer();
-        localStorage.setItem("localItemStorage", JSON.stringify(itemsServer));
+        console.log("loading following items array into the the local database: ");
+        console.log(items);
+        localStorage.setItem("localItemStorage", JSON.stringify(items));
     } else {
+        console.log("found local storage. Use this one");
         items = JSON.parse(localStorage.getItem("localItemStorage"));
     }
 }
-
-
-
-
-
-//updateList();
-async function initialLoad(){
-    await updateFromLocalStroage();
-    console.log("got async all")
-    console.log(items);
-    createListView();
-}
-
-
-
 
 function moveItem(e) {
     const clickedItem = e.target.firstChild.innerText;
@@ -110,6 +118,10 @@ function moveItem(e) {
     //update local storage
     localStorage.setItem("localItemStorage", JSON.stringify(items));
     createListView();
+    sendDataToServer()
+        .then((items) => {
+            console.log(items);
+        });
 }
 
 function decreaseRecentRank(rank) {

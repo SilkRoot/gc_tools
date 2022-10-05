@@ -1,4 +1,25 @@
 let url = "/api/fresh_list"
+
+async function getNewItemList() {
+    let url = "/api/fresh_list"
+    try{
+        let response = await fetch(url)
+        //console.log(response);
+        return await response.json();
+    } catch (error){
+        console.log(error);
+    }
+}
+
+async function updateList(){
+    let itemList = await getNewItemList();
+    itemList.forEach(item => {
+        console.log(item);
+    });
+}
+
+updateList();
+
 /*let headers = new Headers();
 headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/countries');
 
@@ -29,12 +50,12 @@ renderCountries();*/
     .then(data => console.log(data));
 */
 
-async function fetchText() {
-    let response = await fetch(url/*, {
+/*async function fetchText() {
+    let response = await fetch(url, {
         method: 'GET',
         mode: 'no-cors',
         cache: 'no-cache',
-        }*/
+        }
     );
     
     console.log("Status: " + response.status); // 200
@@ -50,7 +71,7 @@ async function fetchText() {
 }
 fetchText();
 console.log("getdata finished now");
-
+*/
 /*
 
 fetch(url, {

@@ -10,19 +10,18 @@ app = Flask(__name__)
 #]
 
 itemList = [
-    {"group": "ObstGemüse",         "type": "Banane",       "additionalInfo": "1",      "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "ObstGemüse",         "type": "Kiwi",         "additionalInfo": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "ObstGemüse",         "type": "Gurke",        "additionalInfo": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "ObstGemüse",         "type": "Tomate",       "additionalInfo": "200g",   "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "ObstGemüse",         "type": "Aubergine",    "additionalInfo": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Brot",         "additionalInfo": "6",      "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Kekse",        "additionalInfo": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Brötchen",     "additionalInfo": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Käse",         "additionalInfo": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Frischkäse",   "additionalInfo": "",       "status": "other", "recentIndex": "0", "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Frischmilch",  "additionalInfo": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Butter",       "additionalInfo": "11",     "status": "other", "recentIndex": "",
- "updatedDate": ""}
+    {"group": "Obst/Gemüse",        "type": "Banane",       "customText": "1",      "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Obst/Gemüse",        "type": "Kiwi",         "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Obst/Gemüse",        "type": "Gurke",        "customText": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
+    {"group": "Obst/Gemüse",        "type": "Tomate",       "customText": "200g",   "status": "open",  "recentIndex": "",  "updatedDate": ""},
+    {"group": "Obst/Gemüse",        "type": "Aubergine",    "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Backwaren",          "type": "Brot",         "customText": "6",      "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Backwaren",          "type": "Kekse",        "customText": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
+    {"group": "Backwaren",          "type": "Brötchen",     "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Molkereiprodukte",   "type": "Käse",         "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Molkereiprodukte",   "type": "Frischkäse",   "customText": "",       "status": "other", "recentIndex": "0", "updatedDate": ""},
+    {"group": "Molkereiprodukte",   "type": "Frischmilch",  "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
+    {"group": "Molkereiprodukte",   "type": "Butter",       "customText": "11",     "status": "other", "recentIndex": "",  "updatedDate": ""}
 ]
 
 
@@ -39,7 +38,9 @@ def get_items():
     return jsonify(itemList)
 
 
-#@app.post("/countries")
+@app.post("/post_full_list")
+def post_full_list():
+
 #def add_country():
 #    if request.is_json:
 #        country = request.get_json()
