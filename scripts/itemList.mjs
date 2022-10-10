@@ -1,8 +1,10 @@
 class ItemList {
     itemList = [];
+    storageName = "defaultStorageName";
 
-    constructor(){
-        console.log("new itemList was created");
+    constructor(storageName){
+        this.storageName = storageName;
+        console.log("new itemList was created with a storage name of: " + this.storageName);
     }
 
     getList() {
@@ -14,11 +16,11 @@ class ItemList {
     }
 
     getDataFromServer(url){
-        console.log("start loading data from server");
+        //console.log("start loading data from server");
         //let url = "/api/fresh_list"
         fetch(url)
             .then((response) => response.json())
-                .then((data) => writeToLocalStorage(data))
+                .then((data) => this.writeToLocalStorage(data))
                     .then(() => {
                         console.log("finished getting all data from server");
                     })
@@ -27,9 +29,9 @@ class ItemList {
     }
 
     writeToLocalStorage(data){
-        if (localStorage.getItem("localItemStorage") !== null) {
+        if (localStorage.getItem(this.storageName) !== null) {
             //"found local storage. Filling this into itemList"
-            this.itemList = JSON.parse(localStorage.getItem("localItemStorage"));
+            this.itemList = JSON.parse(localStorage.getItem(this.storageName));
         }
         return new Promise((resolve, reject) => {
             data.forEach(newItem => {
@@ -44,7 +46,8 @@ class ItemList {
                     }
                 }         
             })
-            localStorage.setItem("localItemStorage", JSON.stringify(this.itemList));
+            //console.log("writing everything to following storage: " + this.storageName);
+            localStorage.setItem(this.storageName, JSON.stringify(this.itemList));
             resolve(
                 console.log("recieved data was compared and written to the local storage")
             );
