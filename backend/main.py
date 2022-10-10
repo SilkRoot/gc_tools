@@ -9,19 +9,35 @@ app = Flask(__name__)
 #    {"id": 3, "name": "Egypt", "capital": "Cairo", "area": 1010408}
 #]
 
+#itemList = [
+#    {"id": 1,  "category": "Obst/Gemüse",        "type": "Banane",       "custom": "1",      "status": "other", "rank": "",  "update": ""},
+#    {"id": 2,  "category": "Obst/Gemüse",        "type": "Kiwi",         "custom": "",       "status": "other", "rank": "",  "update": ""},
+#    {"id": 3,  "category": "Obst/Gemüse",        "type": "Gurke",        "custom": "",       "status": "open",  "rank": "",  "update": ""},
+#    {"id": 4,  "category": "Obst/Gemüse",        "type": "Tomate",       "custom": "200g",   "status": "open",  "rank": "",  "update": ""},
+#    {"id": 5,  "category": "Obst/Gemüse",        "type": "Aubergine",    "custom": "",       "status": "other", "rank": "",  "update": ""},
+#    {"id": 6,  "category": "Backwaren",          "type": "Brot",         "custom": "6",      "status": "other", "rank": "",  "update": ""},
+#    {"id": 7,  "category": "Backwaren",          "type": "Kekse",        "custom": "",       "status": "open",  "rank": "",  "update": ""},
+#    {"id": 8,  "category": "Backwaren",          "type": "Brötchen",     "custom": "",       "status": "other", "rank": "",  "update": ""},
+#    {"id": 9,  "category": "Molkereiprodukte",   "type": "Käse",         "custom": "",       "status": "other", "rank": "",  "update": ""},
+#    {"id": 10, "category": "Molkereiprodukte",   "type": "Frischkäse",   "custom": "",       "status": "other", "rank": "0", "update": ""},
+#    {"id": 11, "category": "Molkereiprodukte",   "type": "Frischmilch",  "custom": "",       "status": "other", "rank": "",  "update": ""},
+#    {"id": 0,  "category": "Molkereiprodukte",   "type": "Butter",       "custom": "11",     "status": "other", "rank": "",  "update": ""}
+#]
+
+
 itemList = [
-    {"group": "Obst/Gemüse",        "type": "Banane",       "customText": "1",      "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Obst/Gemüse",        "type": "Kiwi",         "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Obst/Gemüse",        "type": "Gurke",        "customText": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "Obst/Gemüse",        "type": "Tomate",       "customText": "200g",   "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "Obst/Gemüse",        "type": "Aubergine",    "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Brot",         "customText": "6",      "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Kekse",        "customText": "",       "status": "open",  "recentIndex": "",  "updatedDate": ""},
-    {"group": "Backwaren",          "type": "Brötchen",     "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Käse",         "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Frischkäse",   "customText": "",       "status": "other", "recentIndex": "0", "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Frischmilch",  "customText": "",       "status": "other", "recentIndex": "",  "updatedDate": ""},
-    {"group": "Molkereiprodukte",   "type": "Butter",       "customText": "11",     "status": "other", "recentIndex": "",  "updatedDate": ""}
+    {"id": 1,  "category": "Obst/Gemüse",        "type": "Banane",       "custom": "1",      "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 2,  "category": "Obst/Gemüse",        "type": "Kiwi",         "custom": "",       "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 3,  "category": "Obst/Gemüse",        "type": "Gurke",        "custom": "",       "status": "open",  "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 4,  "category": "Obst/Gemüse",        "type": "Tomate",       "custom": "200g",   "status": "open",  "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 5,  "category": "Obst/Gemüse",        "type": "Aubergine",    "custom": "",       "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 6,  "category": "Backwaren",          "type": "Brot",         "custom": "6",      "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 7,  "category": "Backwaren",          "type": "Kekse",        "custom": "",       "status": "open",  "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 8,  "category": "Backwaren",          "type": "Brötchen",     "custom": "",       "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 9,  "category": "Molkereiprodukte",   "type": "Käse",         "custom": "",       "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 10, "category": "Molkereiprodukte",   "type": "Frischkäse",   "custom": "",       "status": "other", "rank": "0", "update": "0000000000000", "changed": 0},
+    {"id": 11, "category": "Molkereiprodukte",   "type": "Frischmilch",  "custom": "",       "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
+    {"id": 0,  "category": "Molkereiprodukte",   "type": "Butter",       "custom": "11",     "status": "other", "rank": "",  "update": "0000000000000", "changed": 0}
 ]
 
 
@@ -38,8 +54,8 @@ def get_items():
     return jsonify(itemList)
 
 
-@app.post("/post_full_list")
-def post_full_list():
+#@app.post("/post_full_list")
+#def post_full_list():
 
 #def add_country():
 #    if request.is_json:
