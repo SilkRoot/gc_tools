@@ -64,7 +64,7 @@
     font-size: 1.2em;
 }
 
-#buttonCloseAdditionalInfoInput,
+#buttonCustomInfoInput,
 #addItemButton {
     background: none;
     border: none;
@@ -105,6 +105,25 @@ select:focus::-ms-value {
 
 .dropDown {
     width: 100%;
+}
+
+.unusedCategory{
+    display: none;
+}
+
+
+/*only from dev*/
+button {
+    height: 3em;
+    width: 3em;
+    color: pink;
+}
+#buttonCustomInfoInput, #addItemButton {
+    height: 3em;
+    width: 3em;
+    color: pink;
+    background: grey;
+    border: 1px;
 }
 
 /* drop down styling: https://www.clickstorm.de/blog/dropdown-css3/ */
