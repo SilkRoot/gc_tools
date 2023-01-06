@@ -3,14 +3,16 @@ class ItemList {
     storageName = "defaultStorageName";
     categoryList = [];
     getUrl = "";
-    postUrl = "";
+    postFullUrl = "";
+    postUpdateUrl = "";
     //item structure
     //id, category, type, custom, status, rank, update, changed
 
-    constructor(storageName, getUrl, postUrl){
+    constructor(storageName, getUrl, postFullUrl, postUpdateUrl){
         this.storageName = storageName;
         this.getUrl = getUrl;
-        this.postUrl = postUrl;
+        this.postFullUrl = postFullUrl;
+        this.postUpdateUrl = postUpdateUrl;
         //console.log("new itemList was created with a storage name of: " + this.storageName);
     }
 
@@ -56,7 +58,7 @@ class ItemList {
     addItem(item){
         this.itemList.push(item);
         localStorage.setItem(this.storageName, JSON.stringify(this.itemList));
-        this.sendDataToServer();
+        this.sendFullListToServer();
     }
 
     increaseRecentRank(){
@@ -143,8 +145,10 @@ class ItemList {
         });
     }
 
-    sendDataToServer(){
-       /* fetch(this.postUrl, {
+    //TODO
+    //new promise for checkingresponse code, then reset changed status
+    sendFullListToServer(){
+        fetch(this.postFullUrl, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -157,7 +161,37 @@ class ItemList {
             })
             .catch((error) => {
                 console.log("data was not sent successfully:" + error);
-            })*/
+            })
+    }
+
+    //TODO
+    //new promise for checkingresponse code, then reset changed status
+    sendItemsToServer(){
+        let changedItems = [];
+        this.itemList.forEach(item => {
+            if (item.changed === "1"){
+                changedItems.push(item);
+            }
+        });
+        fetch(this.postUpdateUrl, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(changedItems)
+        })
+            .then((resoponse) => {
+                this.itemList.forEach(item => {
+                    if (item.changed === "1"){
+                        item.changed = "0";
+                    }
+                })
+                console.log(resoponse);
+            })
+            .catch((error) => {
+                console.log("data was not sent successfully:" + error);
+            })
     }
 }
 

@@ -13,10 +13,11 @@ let overlay = document.querySelector("#overlay");
 //global variables
 let holdStart = null;
 let holdStop = null;
-const getUrl = "/api/fresh_list";
-const postUrl = "/api/fresh_list";
+const getUrl = "/api/get_list";
+const postFullUrl = "/api/post_full_list";
+const postUpdateUrl = "/api/post_items";
 const storageName = "localItemStorage";
-let itemList = new ItemList(storageName, getUrl, postUrl);
+let itemList = new ItemList(storageName, getUrl, postFullUrl, postUpdateUrl);
 
 
 //events
@@ -48,7 +49,7 @@ function addNewItemFromInput(e){
             status: "open",
             rank: "",
             update: new Date().valueOf(),
-            changed: ""
+            changed: "1"
         };
         itemList.addItem(item);
         reloadAllItems();
@@ -60,6 +61,7 @@ function addNewItemFromInput(e){
 function moveItem(e){
     let item = itemList.getItemByType(e.target.firstChild.innerText);
     item.update = new Date().valueOf();
+    item.changed = "1";
     if (item.status === "open"){
         itemList.increaseRecentRank();
         item.status = "recent";
@@ -78,6 +80,7 @@ function moveItem(e){
     
     //update itemList with changed item
     reloadAllItems();
+    itemList.sendItemsToServer();
 
     //set empty catgories to display none
     const usedCategories = document.querySelectorAll(".usedCategory");
@@ -160,7 +163,9 @@ function closeCustomInfoUI() {
         item.custom = additionalInputText;
         item.category = newCategory;
         item.update = new Date().valueOf();
+        item.changed = "1";
         itemList.updateItem(item);
+        itemList.sendItemsToServer();
     }
 
     //reload normal shopping list

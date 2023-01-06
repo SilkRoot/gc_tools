@@ -1,7 +1,38 @@
+import json
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 #run proxy server on windows
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
+
+class itemList(db.Model):
+    surrogat_id = db.Column(db.Integer, primary_key=True)
+    list_id = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(200), nullable=False)
+    type = db.Column(db.String(200), nullable=False)
+    custom = db.Column(db.String(200), nullable=True)
+    status = db.Column(db.String(20), nullable=False)
+    rank = db.Column(db.String(1), nullable=True)
+    update = db.Column(db.String(13), nullable=False)
+    changed = db.Column(db.String(1), nullable=False)
+
+    def __repr__(self):
+        return f"Item(id = {self.id}, category = {self.category}, type = {self.type}, custom = {self.custom}, status = {self.status}, rank = {self.rank}, update = {self.update}, changed = {self.changed})"
+
+    def getItem(self, list_id, id):
+        item = {"id": self.id,
+                "category": self.category,
+                "type": self.type,
+                "custom": self.custom,
+                "status": self.status,
+                "rank": self.rank,
+                "update": self.update,
+                "changed": self.changed}
+        return {}
+
 
 itemList = [
     {"id": 1,   "category": "Obst/Gemüse",              "type": "Banane",       "custom": "1",      "status": "other", "rank": "",  "update": "0000000000000", "changed": 0},
@@ -38,13 +69,22 @@ itemList = [
 #def get_countries():
 #    return jsonify(countries)
 
-@app.get("/fresh_list")
+@app.route("/get_list", methods=['GET'])
 def get_items():
     return jsonify(itemList)
 
 
-#@app.post("/post_full_list")
-#def post_full_list():
+@app.route("/post_full_list", methods=['POST'])
+def set_full_list():
+    record = json.loads(request.data)
+    print(record)
+    return record
+
+@app.route("/post_items", methods=['POST'])
+def set_items():
+    record = json.loads(request.data)
+    print(record)
+    return record
 
 #def add_country():
 #    if request.is_json:
