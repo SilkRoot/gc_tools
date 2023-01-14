@@ -71,7 +71,9 @@ itemList = [
 
 @app.route("/get_list", methods=['GET'])
 def get_items():
-    return jsonify(itemList)
+    response = jsonify(itemList)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route("/post_full_list", methods=['POST'])

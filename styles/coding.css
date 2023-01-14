@@ -1,0 +1,14 @@
+.code_container{
+    background-color: #2D198E;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    white-space: nowrap; /* avoid linebreak */
+    overflow-x: auto; /* optional horizontal scrollbar */
+}
+
+mark.code {
+    font-family: 'Courier New', Courier, monospace;
+    background: none; /* avoid default yellow */
+}

@@ -1,180 +1,76 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body, a {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #555;
+    text-decoration:none;
+    margin: 0;
 }
 
-body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+.main{
+    max-width: 1020px;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-/*sidebar*/
-#sidenav {
-  height: 100%;
-  width: 7em;
-  position: fixed;
-  background-color: #4fa49a;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  /*border-right: 0.1em solid #aaa;*/
-  overflow-x: hidden;
-  transition: 0.5s;
-
-  display: flex;
+section{
+    padding-top: 1.8em;
+    padding-bottom: 1.8em;;
 }
 
-#SideNavOpenClose {
-  height: 100%;
-  width: 7em;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+h3 {
+    margin-top: 0px;;
 }
 
-#SideNavContent {
-  transition: 0.5s ease-in-out;
-  display: none;
-  margin-left: 9em;
-  display: flex;
-  align-items: center;
+/* black bar for separation of sections */
+.black_bar{
+    margin: 0 auto;
+    height: 2px;
+    width: 150px;
+    background-color: #555;
 }
 
-/*content or body*/
-#content {
-  transition: 0.5s;
-  margin-left: 7em;
-  background-color: #ffffff;
-  min-height: 100vh;
+/* navigation elements */
+.navitem{
+    display: flex;
+    flex-direction: column;
 }
 
-#overlay {
-  z-index: 10;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  /*background: rgba(0, 0, 0, 0.0);*/
-  padding: 16px;
-  opacity: 1;
+.navicon{
+    height: 32px;
+    width: 32px;
+    font-size: 32px;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 
-/*menu button animation*/
-#nav-icon {
-  width: 60px;
-  height: 45px;
-  position: relative;
-  margin: 50px auto;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
-  cursor: pointer;
+.img_autosize{
+    width: 100%; 
+    padding-top: 0.2em;
 }
 
-#nav-icon span {
-  display: block;
-  position: absolute;
-  height: 9px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
+.text_center{
+    text-align: center;
 }
 
-#nav-icon span:nth-child(1) {
-  top: 0px;
+/* contact items */
+.box_flex_centered{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;/* min gap */
 }
 
-#nav-icon span:nth-child(2),
-#nav-icon span:nth-child(3) {
-  top: 18px;
+.contact_icon{
+    height: 32px;
+    width: 32px;
+    font-size: 32px;
 }
 
-#nav-icon span:nth-child(4) {
-  top: 36px;
-}
-
-#nav-icon.open span:nth-child(1) {
-  top: 18px;
-  width: 0%;
-  left: 50%;
-}
-
-#nav-icon.open span:nth-child(2) {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-#nav-icon.open span:nth-child(3) {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-#nav-icon.open span:nth-child(4) {
-  top: 18px;
-  width: 0%;
-  left: 50%;
-}
-
-/*links*/
-ul {
-  list-style-type: none;
-}
-
-a:link,
-a:visited,
-a:hover,
-a:active {
-  text-decoration: none;
-  color: white;
-}
-
-li {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  color: #4fa49a;
-}
-
-/*#title{
-  margin-bottom: 1.5em;
-}*/
-
-#imprintImage{
-  margin: 3em;
-  height: 8em;
-  width: 14em;
-}
-
-#titleSection{
-  display: flex;
-  margin-bottom: 1.5em;
+/* other stuff */
+.box_flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;/* min gap */
 }

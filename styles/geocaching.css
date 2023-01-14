@@ -1,0 +1,19 @@
+.double_column{
+    flex: 2;
+}
+
+.single_column{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* trackable */
+.trackable_box {
+    align-items: center;
+}
+
+.img_trackable {
+    height: 32px;
+    width: 32px;
+}

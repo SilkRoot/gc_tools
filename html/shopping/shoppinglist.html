@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sebastian Lemstra</title>
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="../../styles/shopping/shopping.css" />
+    <link rel="icon" type="image/x-icon" href="../../favicon/favicon-32x32.png">
+    <!--fontawesome free-->
+    <link href="../../assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/brands.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/solid.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <!--navigation-->
+        <section class="nav_parent">
+            <div class="box_flex navigation">
+                <a href="../../index.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    Home
+                </a>
+                <a href="../woodworking.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    Woodworking
+                </a>
+                <a href="../geocaching.html" class="navitem">
+                    <div class="navicon">
+                        <img class="img_autosize" src="../../images/geocaching_white.svg" alt="Header Image">
+                    </div>
+                    Geocaching
+                </a>
+                <a href="../gc_tools.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    Geocaching Tools
+                </a>
+                <a href="../cartography.html" class="navitem text_center">
+                    <div class="navicon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    Cartography &
+                    <br>
+                    Data Visualization
+                </a>
+                <a href="../coding.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    Coding
+                </a>
+            </div>
+        </section>
+
+        <!-- area for the shoppinglist -->
+        <section>
+            <div id="listbox"></div>
+        </section>
+
+        <!-- imprint -->
+        <section>
+            <div class="box_flex_centered">
+                <a href="../imprint.html">IMPRINT</a>
+            </div>
+        </section>
+    </div>
+    <script src="../../scripts/main.js"></script>
+    <script type="module" src="../../scripts/shoppinglist/ItemList.mjs"></script>
+    <script type="module" src="../../scripts/shoppinglist/shopping.js"></script>
+</body>
+
+</html>

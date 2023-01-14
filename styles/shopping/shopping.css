@@ -1,0 +1,262 @@
+/* general */
+body {
+    background-color: #0A192F;
+    user-select: none;
+}
+
+section {
+    padding: 0;
+}
+
+.main {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#listbox {
+    min-height: 80vh;
+}
+
+.itemCategory {
+    background-color: #172A46;
+    border-radius: 5px;
+    color: white;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* navigation */
+.navigation {
+    background-color: #172A46;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.nav_parent {
+    padding-top: 0px;
+}
+
+.navicon,
+.navitem {
+    color: white;
+}
+
+/* other */
+
+#openItems,
+#otherItems {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+#recentItems {
+    background-color: #172A46;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+/* input top */
+
+#itemInput {
+    width: 100%;
+    margin-right: 10px;
+    border: none;
+    font-size: 1.3rem;
+    height: 2rem;
+    border-radius: 5px;
+}
+
+#addItemButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    flex: 0 0 2rem;
+    /* 0= don't grow, 0= don't shrink 2em = start at 2em*/
+}
+
+/*#buttonCustomInfoInput, #addItemButton {
+    height: 1.5rem;
+    width: 1.5rem;
+    color: #8E53E9;
+}*/
+
+#addItemButton {
+    font-size: 1.5rem;
+    background-color: #8E53E9;
+    color: white;
+    padding: 0;
+}
+
+#controls {
+    display: flex;
+    margin-bottom: 10px;
+    background-color: #172A46;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* subpage add additional info */
+.backgroundContainer {
+    background-color: #172A46;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.additionalInfo {
+    border: none;
+    width: 8rem;
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    margin-top: 1rem;
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+#additionalInfoInput {
+    /*width: 100%;
+    border: 0.14em solid #4f74a4;
+    font-size: 1rem;
+    padding: 0.2rem;*/
+    padding: 0;
+    width: 100%;
+    /*box-sizing: border-box;*/
+    border: none;
+    font-size: 1.3rem;
+    height: 2rem;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#additionalInfoInput.input {
+    padding-left: 5px;
+    box-sizing: border-box;
+
+}
+
+#categoryChooser {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    height: 2rem;
+}
+
+#itemheadline {
+    color: white;
+    display: flex;
+    font-size: 1.3rem;
+    height: 1.5rem;
+    margin-bottom: 10px;
+}
+
+#title {
+    margin: 0;
+    width: 100%;
+    font-size: 1rem;
+}
+
+#buttonCustomInfoInput {
+    font-size: 1rem;
+    flex: 0 0 2rem;
+    /* 0= don't grow, 0= don't shrink 2em = start at 2em*/
+}
+
+/* headlines */
+
+.groupHeadline {
+    margin-top: 10px;
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.unusedCategory {
+    display: none;
+}
+
+h4 {
+    margin-top: 0px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.categoryHeadlineContainer {
+    display: flex;
+}
+
+.openIndicator {
+    height: 0.8rem;
+    transition: 0.2s linear;
+    margin-top: 0.19em;
+    margin-right: 10px;
+}
+
+/* items */
+
+.itemBox,
+#recentItems {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    transition: height 2.2s ease-out;
+    transition: opacity 0.2s ease-out;
+}
+
+.item {
+    background-color: #39b89e;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+}
+
+.item
+
+/*, button*/
+    {
+    height: 7rem;
+    width: 7rem;
+}
+
+/*@media only screen and (max-width: 900px) {
+    .item, button {
+        height: 30rem;
+        width: 30rem;
+    }
+  }
+
+@media only screen and (min-width: 900px) {
+    .item, button {
+        height: 10rem;
+        min-width: 10rem;
+    }
+  }
+*/
+.openStatus {
+    background-color: #8E53E9;
+}
+
+.itemText {
+    pointer-events: none;
+    /*font-size: 1.3rem;*/
+}
+
+/*only from dev*/
+button {
+    color: white;
+    border-radius: 5px;
+}

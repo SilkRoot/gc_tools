@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sebastian Lemstra</title>
+    <link rel="stylesheet" href="../../styles/main.css" />
+    <link rel="stylesheet" href="../../styles/coding.css" />
+    <link rel="icon" type="image/x-icon" href="../../favicon/favicon-32x32.png">
+    <!--fontawesome free-->
+    <link href="../../assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/brands.css" rel="stylesheet">
+    <link href="../../assets/fontawesome/css/solid.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <!--navigation-->
+        <section>
+            <div class="box_flex">
+                <a href="../../index.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    Home
+                </a>
+                <a href="../woodworking.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    Woodworking
+                </a>
+                <a href="../geocaching.html" class="navitem">
+                    <div class="navicon">
+                        <img class="img_autosize" src="../../images/geocaching.svg" alt="Header Image">
+                    </div>
+                    Geocaching
+                </a>
+                <a href="../gc_tools.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    Geocaching Tools
+                </a>
+                <a href="../cartography.html" class="navitem text_center">
+                    <div class="navicon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    Cartography &
+                    <br>
+                    Data Visualization
+                </a>
+                <a href="../coding.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    Coding
+                </a>
+            </div>
+        </section>
+        <section>
+            <h1>Configruation of a HAProxy for different subdomains and SSL Termination</h1>
+        </section>
+        <section>
+            <p>HAProxy started in 2000 and is, besides Apache, one of the main reverse proxies and load balancer. The
+                basic
+                config, I would like to show here, is called <mark class="code">haproxy.cfg</mark>. It includes the
+                support of subdomains but no
+                load balancing. Subdomains are located in front of the top and second-level-domain. For example, the <mark
+                    class="code">en</mark> of
+                <mark class="code">https://en.wikipedia.org/</mark> is a subdomain.</p>
+            <p>Starting with the config with the standard timeouts and location of the:</p>
+            <div class="code_container">
+                global<br>
+                &nbsp;&nbsp;stats socket /var/run/api.sock user haproxy group haproxy mode 660 level admin expose-fd
+                listeners<br>
+                &nbsp;&nbsp;log stdout format raw local0 info<br>
+                <br>
+                defaults<br>
+                &nbsp;&nbsp;mode http<br>
+                &nbsp;&nbsp;timeout client 10s<br>
+                &nbsp;&nbsp;timeout connect 5s<br>
+                &nbsp;&nbsp;timeout server 10s<br>
+                &nbsp;&nbsp;timeout http-request 10s<br>
+                &nbsp;&nbsp;log global<br>
+            </div>
+            <p>The next block contains the frontend stats. This part is optional. It requires the accessiblility to this
+                port and allows the access to a panel with some stats via the browser</p>
+            <div class="code_container">frontend stats<br>
+                &nbsp;&nbsp;bind *:8404<br>
+                &nbsp;&nbsp;stats enable<br>
+                &nbsp;&nbsp;stats uri /<br>
+                &nbsp;&nbsp;stats refresh 10s
+            </div>
+            <p>Now starts the fun, the definition of the mode and the ports, through which the traffic enters. In this
+                case we bind to port 80 for normal http requests. The second port, we bind is port 443. It is used for
+                SSL traffic, which can be identified by the s in https. To allow https we must provide the respective
+                certificates, which can be obtained for example from letsencrypt.com. In this case the default path is
+                given to the certificates in a docker container including the name of the certificate. Multiple
+                certificates can be concatenated with the keyword crt.</p>
+            <p>In the last step of this part, we redirect all traffic, which arrives on without https to https to ensure
+                a save connection
+            </p>
+            <div class="code_container">frontend http_in<br>
+                &nbsp;&nbsp;mode http<br>
+                &nbsp;&nbsp;bind *:80<br>
+                &nbsp;&nbsp;bind *:443 ssl crt /usr/local/etc/haproxy/certificates/mydomain.com.pem crt
+                /usr/local/etc/haproxy/certificates/subdomain.mydomain.com.pem<br>
+                &nbsp;&nbsp;http-request redirect scheme https unless { ssl_fc }<br>
+            </div>
+            <p>The next step is the splitting of the incoming traffic based on the subdomains test1 and test2 on the
+                docker container in the network. Therefore ACL (Access Control List) must be defined. The second step
+                includes the mapping to a backend. The first rule, which is true will be applied. Therefore, the fallback
+                httpd is defined at the ending. Finally, the definition of the backends is shown.</p>
+            <div class="code_container">
+                &nbsp;&nbsp;acl web1 hdr_dom(host) -i test1.mydomain.com<br>
+                &nbsp;&nbsp;acl web2 hdr_dom(host) -i test2.mydomain.com<br>
+                <br>
+                &nbsp;&nbsp;use_backend web1 if web1<br>
+                &nbsp;&nbsp;use_backend web2 if web2<br>
+                &nbsp;&nbsp;use_backend httpd_app_1<br>
+                <br>
+                &nbsp;&nbsp;#backend web1<br>
+                &nbsp;&nbsp;mode http<br>
+                &nbsp;&nbsp;server web1 web1:8080<br>
+                <br>
+                &nbsp;&nbsp;#backend web2<br>
+                &nbsp;&nbsp;mode http<br>
+                &nbsp;&nbsp;server web2 web2:8080<br>
+                <br>
+                &nbsp;&nbsp;backend httpd_app_1<br>
+                &nbsp;&nbsp;mode http<br>
+                &nbsp;&nbsp;server httpd_app_1 httpd_app_1:8080<br>
+            </div>
+        </section>
+        <section>
+            <div class="box_flex_centered">
+                <a href="../imprint.html">IMPRINT</a>
+            </div>
+        </section>
+    </div>
+    <script src="../../scripts/main.js"></script>
+</body>
+</html>

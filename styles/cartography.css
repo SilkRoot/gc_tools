@@ -1,0 +1,20 @@
+/* header */
+h1{
+    font-size: 2em;;
+}
+
+
+/* colum layout */
+.double_column{
+    flex: 2;
+}
+
+.single_column{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.text_right{
+    text-align: right;
+}

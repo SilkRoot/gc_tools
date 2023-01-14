@@ -2,53 +2,124 @@
 <html lang="de">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sebastian Lemstra</title>
-  <link rel="stylesheet" href="./styles/main.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sebastian Lemstra</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="icon" type="image/x-icon" href="./favicon/favicon-32x32.png">
+    <!--fontawesome free-->
+    <link href="./assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="./assets/fontawesome/css/brands.css" rel="stylesheet">
+    <link href="./assets/fontawesome/css/solid.css" rel="stylesheet">
 </head>
 
 <body>
-  <div id="sidenav">
-    <div id="SideNavOpenClose">
-      <div id="nav-icon">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    <img class="headerimage" src="./images/gebaeude_clipped2.png" alt="Header Image">
+    <div class="myname">
+        Sebastian Lemstra
     </div>
-    <div id="SideNavContent">
-      <ul>
-        <li><a href="index.html">Startseite</a></li>
-        <li><a href="gc_tools.html">Geocaching Tools</a></li>
-        <li><a href="shopping.html">Einkaufsliste</a></li>
-        <li><a href="imprint.html">Impressum</a></li>
-        <li><a href="test.html">Test</a></li>
-      </ul>
+    <div class="main">
+        <section>
+            <div class="black_bar"></div>
+        </section>
+        <!--navigation-->
+        <section>
+            <div class="box_flex">
+                <!--<a href="index.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    Home
+                </a>-->
+                <a href="./html/woodworking.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    Woodworking
+                </a>
+                <a href="./html/geocaching.html" class="navitem">
+                    <div class="navicon">
+                        <img class="img_autosize" src="./images/geocaching.svg" alt="Header Image">
+                    </div>
+                    Geocaching
+                </a>
+                <a href="./html/gc_tools.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    Geocaching Tools
+                </a>
+                <a href="./html/cartography.html" class="navitem text_center">
+                    <div class="navicon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    Cartography &
+                    <br>
+                    Data Visualization
+                </a>
+                <a href="./html/coding.html" class="navitem">
+                    <div class="navicon">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    Coding
+                </a>
+            </div>
+        </section>
+        <!--description-->
+        <section>
+            <div class="box_flex">
+                <div class="columns text_right">Hi, I'm Sebastian,
+                    <br>
+                    Cartographer, Woodworker and IT-Consultant based in Karlsruhe
+                </div>
+                <div class="columns text_main">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                </div>
+                <div class="columns text_main">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                    labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                    et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="box_flex myname">
+                CONTACT
+            </div>
+        </section>
+        <section>
+            <div class="black_bar"></div>
+        </section>
+        <!-- contact icons -->
+        <section>
+            <div class="box_flex_centered">
+                <div class="contact_icon">
+                    <a href="https://www.xing.com/profile/Sebastian_Lemstra/cv" target="_blank">
+                        <i class="fa-brands fa-xing"></i>
+                    </a>
+                </div>
+                <div class="contact_icon">
+                    <a href="https://www.linkedin.com/in/sebastian-lemstra-87a95299/" target="_blank">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <div class="contact_icon">
+                    <a href="mailto:alienus@gmx.de">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="box_flex_centered">
+                <a href="./html/imprint.html">IMPRINT</a>
+            </div>
+        </section>
     </div>
-  </div>
-
-  <div id="content">
-    <div id="overlay">
-      <section id="titleSection">
-        <h1 id="title">Sebastian Lemstra</h1>
-      </section>
-      <!--
-        Hexagons mit Interesse
-        Kartographie
-        Datenanalyse u.a. auf Datenbanken
-        Technische Projekte
-        Programming (JavaScript / (Heim-)Automatisierung)
-      -->
-      <!--<div class="barBackground">
-        <div class="barFilled">
-          <div class="barText">Illustrator</div>
-        </div>
-      </div>-->
-    </div>
-  </div>
-  <script src="./scripts/main.js"></script>
+    <script src="./scripts/main.js"></script>
 </body>
 
 </html>

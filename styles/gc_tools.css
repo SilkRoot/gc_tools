@@ -1,129 +1,150 @@
-section {
-  display: flex;
-  flex-flow: row wrap;
-  margin-bottom: 2em;
+/* navigator */
+.navigator_background{
+    background-color: #02874D;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-#col1,
-#col2,
-#col3 {
-  flex: 1 300px;
+.navigator_background.box_flex{
+    justify-content: flex-start;
 }
 
-.centered {
-  margin-top: 2em;
-  justify-content: space-around;
+.navitem{
+    color: white;
+    font-size: 0.8em;
 }
 
-/*encryption area*/
-#input,
-#output {
-  width: 90%;
-  height: 10em;
-  border: 0.14em solid #4fa49a;
-  font-size: 1.2em;
+.navicon{
+    font-size: 24px;
 }
 
-#decrypt, #encrypt, #cipher{
-  margin-top: 0.5em;
-  border: none;
-  background-color: #4fa49a;
-  color: white;
-  font-size: 1em;
-  padding: 0.3em;
-  width: 90%;
-}
-
-#decrypt {
-  float: right;
-  margin-right: 10%;
-}
-
-#cipher{
-  margin-bottom: 1em;
-}
-
-option:focus,
-option:active,
-option:hover,
-option:focus-within,
-option:target,
-option:focus-visible{
-  color: #4fa49a;
-  background-color: white;
-}
-
-#description{
-  width: 90%;
-}
-
-/*mapping table*/
+/* mapping table */
 #mappingTables {
-  flex-flow: column wrap;
-  align-items: center;
+    flex-flow: column wrap;
+    align-items: center;
 }
 
 .mappingTable {
-  display: flex;
-  flex-flow: row wrap;
-  margin-top: 0.3em;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .letterBoxCol {
-  min-width: 1.8em;
-  border-width: 0.07em;
-  border-style: solid;
-  border-color: #4fa49a;
-  text-align: center;
-  font-family: monospace;
-  font-size: 1.4em;
+    min-width: 1.8em;
+    border-width: 2px;
+    border: 1px #02874D solid;
+    /* outer stroke */
+    outline: 1px #02874D solid;
+    /* inner stroke */
+    text-align: center;
+    font-family: monospace;
+    font-size: 1.4em;
 }
 
 .letterBoxCol>p {
-  margin-block-start: 0.1em;
-  margin-block-end: 0.1em;
-  padding-left: 0.25em;
-  padding-right: 0.25em;
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+}
+
+
+/* basic column layout */
+.single_column {
+    flex: 1;
+}
+
+/* encryption */
+#input,
+#output {
+    width: 93.5%;
+    height: 10em;
+    border: 2px solid #02874D;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+}
+
+#input:focus,
+#output:focus {
+    outline: none !important;
+    border: 2px solid #02874D;
+}
+
+#decrypt,
+#encrypt {
+    background-color: #02874D;
+    border: none;
+    color: white;
+    padding: 0px;
+    width: 98%;
+    height: 2em;
+    margin-top: 20px;
+    border-radius: 5px;
 }
 
 
 
-
-/*trackable link at the end*/
-.trackableImage {
-  padding-right: 0.5em;
+/* style Verschlüsselungsmethode */
+#description {
+    font-size: 0.8em;
 }
 
-.trackableText {
-  padding-top: 0.3em;
+.text_main {
+    padding-top: 20px;
+    text-align: justify;
 }
 
-a.trackableText:link,
-a.trackableText:visited,
-a.trackableText:hover,
-a.trackableText:active {
-  color: #4fa49a;
+#cipher {
+    width: 100%;
+    height: 2em;
+    font-size: 1em;
+    border: 2px solid #02874D;
+    box-shadow: 0 0 0px 0px rgba(0, 0, 0, 0);
+    border-radius: 5px;
+}
+
+#cipher:focus {
+    outline: none !important;
+    border: 2px solid #02874D;
 }
 
 /*slider*/
-#rotNumberSlider{
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;  
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+#additionalControls {
+    margin-top: 20px;
+}
+
+#rotNumberSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
 }
 
 #rotNumberSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%; 
-  background:  #4fa49a;
-  cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #02874D;
+    cursor: pointer;
+}
+
+/* trackable */
+.trackable_box {
+    align-items: center;
+}
+
+.img_trackable {
+    height: 32px;
+    width: 32px;
 }
